@@ -1,0 +1,182 @@
+:root{
+    --color-cinza: #E0E1DD;
+    --color-laranja: #FF6B35;
+    --color-AZLCLARO: #415A77;
+    --color-AZLESCURO: #0D1B2A;
+}
+
+
+
+*{
+    margin: 0;
+    
+}
+ 
+
+
+    body{
+            font-family:  'Roboto Flex', Arial, sans-serif;
+        background-color: var(--color-AZLESCURO);
+        color: var(--color-cinza);
+      
+
+
+
+}
+
+
+
+
+    a{
+    color: inherit;
+    text-decoration: none;
+
+}    
+
+
+
+.cabeçario_{
+    background: red;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 40px 80px;
+   
+
+}
+
+
+
+.header{
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0px;
+        font-weight: 900;
+        font-size: 40px;
+        line-height: 47px;
+        
+        font-family: 'Roboto Flex';
+
+}
+
+
+
+    .header .navegação{
+            display: flex;
+            align-items: center;
+            gap: 2.25rem;
+}
+
+
+
+    .header .navegação .item{
+            font-size: 1rem;
+            font-weight: 600;
+
+
+}
+
+
+
+    .header .navegação .item.btn{
+            
+padding: 8px 16px;
+background: #FF6B35;
+border-width: 1px 0px;
+border-style: solid;
+border-color: rgba(255, 255, 255, 0.2);
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 2000px;
+
+
+}
+
+
+
+.Conteudo_{
+    display: flex;
+    justify-content: space-between;
+    
+    order: 2;
+    
+
+background: url(image.png); /* imagem*/
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+}
+
+
+
+.Conteudo_ .texts{
+        max-width: 507px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+
+}
+
+
+
+.Conteudo_ .texts h1{
+    font-weight: 900;
+    font-size: 50px;
+    
+
+    
+
+}
+
+
+
+.Conteudo_ .texts p{
+    font-size: 16px;
+    color: var(--color-cinza);
+    margin-bottom: 4rem;
+    
+}
+
+
+.Conteudo_ .texts a{
+    max-width: max-content;
+    font-weight: 600;
+    box-sizing: border-box;
+    padding: 12px 24px;
+    border: 3px solid #FF6B35;
+    border-radius: 2000px;
+    display: flex;
+
+}
+
+.cards_{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+}
+
+
+
+.card_feedbacks .card_CONTATO .card_SERVIÇOS .card_CARROS{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+gap: 10px;
+
+
+
+}
+
+
+
+.card_feedbacks .card_CONTATO .card_SERVIÇOS .card_CARROS img{
+            max-width: max-content;
+            padding-bottom: 1.5rem;
+
+}
+
