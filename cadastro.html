@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Cadastro</title>
+    <script>
+        function mostrarEtapa(etapa) {
+            document.querySelectorAll('.etapa').forEach(e => e.style.display = 'none');
+            document.getElementById(etapa).style.display = 'block';
+        }
+        
+        function buscarCEP() {
+            let cep = document.getElementById('cep').value;
+            if (cep.length === 8) {
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.erro) {
+                            document.getElementById('logradouro').value = data.logradouro;
+                            document.getElementById('bairro').value = data.bairro;
+                            document.getElementById('cidade').value = data.localidade;
+                            document.getElementById('estado').value = data.uf;
+                        } else {
+                            alert('CEP não encontrado!');
+                        }
+                    });
+            } else {
+                alert('Digite um CEP válido!');
+            }
+        }
+
+        function identificarBandeira() {
+            let numeroCartao = document.getElementById('numeroCartao').value;
+            let bandeiraTexto = document.getElementById('bandeiraTexto');
+            let primeirosDigitos = numeroCartao.substring(0, 4);
+            
+            if (/^4/.test(primeirosDigitos)) {
+                bandeiraTexto.innerHTML = "Visa";
+            } else if (/^5[1-5]/.test(primeirosDigitos)) {
+                bandeiraTexto.innerHTML = "MasterCard";
+            } else if (/^3[47]/.test(primeirosDigitos)) {
+                bandeiraTexto.innerHTML = "American Express";
+            } else {
+                bandeiraTexto.innerHTML = "Número inválido";
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <header class="cabecario_header">
+        <div class="container_nagavegacao interface">
+            <a href="index.html" class="logo"> AUTOFIX </a>
+            <nav class="navegacao">
+                <a href="index.html">&#8962; Página Inicial</a>
+                <button class="btn btn_branco" onclick="window.location.href='login.html'">Login</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="form-container interface">
+            <form>
+                <!-- Etapa 1 - Dados Pessoais -->
+                <div id="etapa1" class="etapa">
+                    <h2>Etapa 1 - Dados Pessoais</h2> <br>
+                    <label>Nome</label>
+                    <input type="text" required><br>
+                    <label>Sobrenome</label>
+                    <input type="text" required><br>
+                    <label>CPF/CNPJ</label>
+                    <input type="text" required><br>
+                    <label>Data de Nascimento</label>
+                    <input type="date" required><br>
+                    <label>E-mail</label>
+                    <input type="email" required><br>
+                    <label>Telefone</label>
+                    <input type="text" required><br><br>
+                    <button type="button" onclick="mostrarEtapa('etapa2')">Próxima Etapa</button>
+                </div>
+
+                <!-- Etapa 2 - Endereço -->
+                <div id="etapa2" class="etapa" style="display: none;">
+                    <h2>Etapa 2 - Endereço</h2> <br>
+                    <label>CEP</label>
+                    <div class="cep-container">
+                        <input type="text" id="cep" required>
+                        <button type="button" onclick="buscarCEP()">🔍</button><br>
+                    </div>
+                    <label>Logradouro</label>
+                    <input type="text" id="logradouro" required><br>
+                    <label>Número</label>
+                    <input type="text" id="numero">
+                    <input type="checkbox" id="semNumero"><label for="semNumero">Sem número</label><br>
+                    <label>Bairro</label>
+                    <input type="text" id="bairro" required><br>
+                    <label>Cidade</label>
+                    <input type="text" id="cidade" required>
+                    <label>Estado</label>
+                    <input type="text" id="estado" required><br>
+                    <label>Complemento</label>
+                    <input type="text" id="complemento"><br><br>
+                    <button type="button" onclick="mostrarEtapa('etapa1')">Voltar</button>
+                    <button type="button" onclick="mostrarEtapa('etapa3')">Próxima Etapa</button>
+                </div>
+
+                <!-- Etapa 3 - Dados de Cobrança -->
+                <div id="etapa3" class="etapa" style="display: none;">
+                    <h2>Etapa 3 - Dados de Cobrança</h2><br>
+                    <label>Nome no Cartão</label>
+                    <input type="text" required><br>
+                    <label>Número do Cartão</label>
+                    <input type="text" id="numeroCartao" onkeyup="identificarBandeira()" required>
+                    <!--<label> bandeira do cartão: </label> -->
+                    <span id="bandeiraTexto"></span><br>
+                    <label>Data de Validade</label>
+                    <input type="month" required><br>
+                    <label>Código de Segurança (CVV)</label>
+                    <input type="text" required><br><br>
+                    <button type="button" onclick="mostrarEtapa('etapa2')">Voltar</button>
+                    <button type="submit">Finalizar Cadastro</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>
