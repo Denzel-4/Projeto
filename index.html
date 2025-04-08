@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="Assets/Styles/Home/Home.css">
+    <link rel="stylesheet" href="Assets/Styles/conteudoPage/style.css">
+    <link rel="stylesheet" href="Assets/Styles/global/components.css">
+
     <!-- <link rel="stylesheet" href="Assets/Styles/Home/style.css"> -->
     <title>Document</title>
     <script>
@@ -26,16 +30,28 @@
 <body>
     <div class="overlay" id="overlay"></div>
     <header class="cabecario_header">
-        <div class="container_nagavegacao interface">
-            <a href="#" class="logo"> AUTOFIX </a>
-            <nav class="navegacao">
-                <a href="#">HOME</a>
-                <a href="#">SOBRE</a>
-                <a href="#">CONTATO</a>
-                <a href="#">MODELOS</a>
-                <button class="btn btn_branco" onclick="abrirPopup('loginPopup')">LOGIN</button>
-                <button class="btn btn_branco" onclick="abrirPopup('agendamentoPopup')">AGENDAR</button>
-            </nav>
+        <div class="container_nagavegacao interface2">
+            <a href="#" class="logo"> AUTO<span>FIX</span> </a>
+            <div class=" desktop">
+                <nav class="navegacao">
+                    <a href="#">HOME</a>
+                    |
+                    <a href="#">SOBRE</a>
+                    |
+                    <a href="#">CONTATO</a>
+                    |
+                    <a href="#">MODELOS</a>
+                    <button class="btn btn_laranja2" onclick="abrirPopup('loginPopup')">LOGIN</button>
+                    <button class="btn btn_laranja2" onclick="abrirPopup('agendamentoPopup')">AGENDAR</button>
+                </nav>
+            </div>
+            <div class="mobille">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" class="bi bi-list"
+                    viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                </svg>
+            </div>
         </div>
     </header>
 
@@ -65,11 +81,13 @@
                 <div class="home_content">
                     <h1>OFICINA INTELIGENTE</h1>
                     <p>Agende, acompanhe e otimize seus serviços automotivos de forma rápida e prática! Nosso sistema
-                        online oferece orçamentos automáticos e organiza toda a gestão da sua oficina. Transforme a experiência para
+                        online oferece orçamentos automáticos e organiza toda a gestão da sua oficina. Transforme a
+                        experiência para
                         você e seus clientes!</p>
                     <div class="container_buttons">
                         <a href="#">
-                            <button class="btn btnH btn_laranja" onclick="abrirPopup('agendamentoPopup')"> AGENDAR AGORA </button>
+                            <button class="btn btnH btn_laranja" onclick="abrirPopup('agendamentoPopup')"> AGENDAR AGORA
+                            </button>
                         </a>
                         <a href="#">
                             <button class="btn btnH btn_laranja2"> SAIBA MAIS </button>
@@ -79,51 +97,190 @@
             </div>
         </section>
 
-        <section class="container_cards interface">
-            <article class="card">
-                <img src="Assets/Imgs/FEEDBACK.png" alt="FEEDBACK">
-                <div class="card_content">
-                    <h2>FEEDBACK</h2>
-                    <P>Veja o que nossos clientes dizem sobre a Autofixo!</P>
-                    <button class="btn btnH btn_laranja">ACESSAR</button>
-                </div>
-            </article>
-            <article class="card">
-                <img src="Assets/Imgs/CONTATO.png" alt="CONTATO">
-                <div class="card_content">
-                    <h2>CONTATO</h2>
-                    <P>Fale conosco para tirar dúvidas ou agendar um atendimento.</P>
-                    <button class="btn btnH btn_laranja">ACESSAR</button>
-                </div>
-            </article>
-            <article class="card">
-                <img src="Assets/Imgs/SERVIÇOS.png" alt="SERVIÇOS">
-                <div class="card_content">
-                    <h2>SERVIÇOS</h2>
-                    <P>Veja todos os serviços que oferecemos e os benefícios para o seu veículo.</P>
-                    <button class="btn btnH btn_laranja">ACESSAR</button>
-                </div>
-            </article>
-            <article class="card">
-                <img src="Assets/Imgs/CARRO.png" alt="CARRO">
-                <div class="card_content">
-                    <h2>CARRO</h2>
-                    <P>Confira todos os veículos que trabalhamos!</P>
-                    <button class="btn btnH btn_laranja">ACESSAR</button>
-                </div>
-            </article>
+        <section class="conteudoPage_hero">
+            <section class="container_cards interface">
+                <article class="card">
+                    <img src="Assets/Imgs/SERVIÇOS.png" alt="SERVIÇOS">
+                    <div class="card_content">
+                        <h2>SERVIÇOS</h2>
+                        <P>Veja todos os serviços que oferecemos e os benefícios para o seu veículo.</P>
+                        <button class="btn btnH btn_laranja">ACESSAR</button>
+                    </div>
+                </article>
+                <article class="card">
+                    <img src="Assets/Imgs/FEEDBACK.png" alt="FEEDBACK">
+                    <div class="card_content">
+                        <h2>FEEDBACK</h2>
+                        <P>Veja o que nossos clientes dizem sobre a Autofixo!</P>
+                        <button class="btn btnH btn_laranja">ACESSAR</button>
+                    </div>
+                </article>
+                <article class="card">
+                    <img src="Assets/Imgs/CONTATO.png" alt="CONTATO">
+                    <div class="card_content">
+                        <h2>CONTATO</h2>
+                        <P>Fale conosco para tirar dúvidas ou agendar um atendimento.</P>
+                        <button class="btn btnH btn_laranja">ACESSAR</button>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <img src="Assets/Imgs/CARRO.png" alt="CARRO">
+                    <div class="card_content">
+                        <h2>CARRO</h2>
+                        <P>Confira todos os veículos que trabalhamos!</P>
+                        <button class="btn btnH btn_laranja">ACESSAR</button>
+                    </div>
+                </article>
+            </section>
         </section>
     </main>
-    <br><br><footer class="rodape">
-        <div class="rodape-container interface">
-            <Política href="politicas.html"style="color: white;">Política de Privacidade</a> <br>
-                 <a href="termos.html" style="color: white;">Termos de Uso</a><br>
-                 <a href="contato.html" style="color: white;">Fale Conosco </a></p><br>
 
-            <p>Estamos em conformidade com a <strong>Lei Geral de Proteção de Dados (LGPD)</strong>.</p><br><br>
-            <p>© 2025 AutoFix | Todos os direitos reservados.</p>
+    <section class="servicos interface">
+        <h3 class="title">Com que podemos <span>ajudar você...</span> </h3>
+        <div class="servicos_container">
+            <div class="servicos_card servicos_card1">
+                <div class="container_imagem">
+                    <img src="./Assets/Imgs/manutencao.png" alt="">
+                </div>
+                <div>
+                    <h4>Manutenção Preventiva</h4>
+                    <p>
+                        A manutenção preventiva é a melhor forma de evitar surpresas desagradáveis, como quebras
+                        inesperadas ou altos custos com consertos. Aqui na nossa oficina, realizamos uma verificação
+                        completa do seu carro, seguindo as recomendações do fabricante e utilizando peças de qualidade.
+                    </p>
+                    <ul>
+                        <li>Troca de óleo e filtros</li>
+                        <li>Revisão de freios</li>
+                        <li>Verificação de bateria</li>
+                        <li>Alinhamento e balanceamento</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="servicos_card servicos_card2">
+                <div class="container_imagem">
+                    <img src="./Assets/Imgs/manutencao.png" alt="">
+                </div>
+                <div>
+                    <h4>Serviços de Motor</h4>
+                    <p>O motor é o coração do seu veículo, e aqui na AutoFix, cuidamos dele com toda a
+                        atenção e conhecimento que ele merece. Trabalhamos com diagnósticos precisos e soluções eficazes
+                        para garantir o máximo desempenho e durabilidade do seu motor.
+
+                    </p>
+                    <ul>
+                        <li>Diagnóstico eletrônico</li>
+                        <li>Troca de correia dentada</li>
+                        <li>Limpeza de bicos</li>
+                        <li>Regulagem de válvulas</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="servicos_card servicos_card1">
+                <div class="container_imagem">
+                    <img src="./Assets/Imgs/manutencao.png" alt="">
+                </div>
+                <div>
+                    <h4>Sistema elétrico</h4>
+                    <p>O sistema elétrico é o cérebro do seu veículo. Ele comanda tudo: ignição, iluminação, painel,
+                        som, vidros elétricos, travas, sensores e muito mais. Por isso, qualquer falha elétrica pode
+                        comprometer o conforto, a segurança e até a partida do seu carro.
+
+                    </p>
+                    <ul>
+                        <li>Verificação da bateria</li>
+                        <li>Reparo em chicotes e conexões elétricas</li>
+                        <li>Troca de lâmpadas, fusíveis e relês</li>
+                        <li>Instalação de acessórios (alarme, som, faróis auxiliares, etc.)
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="servicos_card servicos_card2">
+                <div class="container_imagem">
+                    <img src="./Assets/Imgs/manutencao.png" alt="">
+                </div>
+                <div>
+                    <h4>Sistema de Freios</h4>
+                    <p>Freios em bom estado salvam vidas. Por isso, tratamos o sistema de freios com máxima prioridade.
+                        Trabalhamos com atenção total aos detalhes, peças de qualidade e profissionais experientes para
+                        garantir que seu carro pare com segurança em qualquer situação.</p>
+                    <ul>
+                        <li>Revisão completa do sistema de freios
+
+                        </li>
+                        <li>Troca de pastilhas e lonas</li>
+                        <li>Substituição de discos e tambores</li>
+                        <li>Verificação e troca de fluido de freio
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="sobre">
+        <section class="container_flex container_flex1">
+            <div class="flex_imagem">
+                <img src="./Assets/Imgs/sobre (1).jpg" alt="">
+            </div>
+            <div>
+                <div class="container_flex_content primeiro">
+                    <h4 class="title_big2">Sobre a Mecanica<span> Autofix</span></h4>
+                    <p>A Autofix é uma oficina mecânica dedicada a oferecer um serviço de qualidade, com confiança,
+                        responsabilidade e transparência em cada atendimento. Nossa equipe é formada por profissionais
+                        experientes e apaixonados por mecânica, prontos para cuidar do seu veículo com atenção aos
+                        detalhes
+                        e uso das melhores peças e tecnologias do mercado. Realizamos desde revisões preventivas até
+                        reparos
+                        completos em motor, freios, sistema elétrico e muito mais. <br> <br>
+
+                        Nosso compromisso é garantir a segurança e o bom desempenho do seu carro, evitando surpresas
+                        desagradáveis e prolongando sua vida útil. Na Autofix, cada cliente é atendido com respeito e
+                        clareza, porque acreditamos que quem confia o carro à nossa oficina, merece mais do que um bom
+                        serviço — merece tranquilidade.</p>
+                </div>
+        </section>
+        <section class="Sobre container_flex container_flex2">
+            <div class="flex_imagem">
+                <img src="./Assets/Imgs/sobre (2).jpg" alt="">
+            </div>
+            <div>
+                <div class="container_flex_content">
+                    <h4 class="title_big">Sobre a Mecanica<span> Autofix</span></h4>
+                    <p>A Autofix é uma oficina mecânica dedicada a oferecer um serviço de qualidade, com confiança,
+                        responsabilidade e transparência em cada atendimento. Nossa equipe é formada por profissionais
+                        experientes e apaixonados por mecânica, prontos para cuidar do seu veículo com atenção aos
+                        detalhes
+                        e uso das melhores peças e tecnologias do mercado. Realizamos desde revisões preventivas até
+                        reparos
+                        completos em motor, freios, sistema elétrico e muito mais. <br> <br>
+
+                        Nosso compromisso é garantir a segurança e o bom desempenho do seu carro, evitando surpresas
+                        desagradáveis e prolongando sua vida útil. Na Autofix, cada cliente é atendido com respeito e
+                        clareza, porque acreditamos que quem confia o carro à nossa oficina, merece mais do que um bom
+                        serviço — merece tranquilidade.</p>
+
+                </div>
+        </section>
+    </section>
+
+
+    <footer class="rodape">
+        <div class="rodape-container interface">
+            <Política href="politicas.html" style="color: white;">Política de Privacidade</a> <br>
+                <a href="termos.html" style="color: white;">Termos de Uso</a><br>
+                <a href="contato.html" style="color: white;">Fale Conosco </a></p><br>
+
+                <p>Estamos em conformidade com a <strong>Lei Geral de Proteção de Dados (LGPD)</strong>.</p><br><br>
+                <p>© 2025 AutoFix | Todos os direitos reservados.</p>
 
         </div>
     </footer>
 </body>
+
 </html>
