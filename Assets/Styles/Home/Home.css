@@ -290,6 +290,36 @@ padding: 0px 20px 20px 20px;
 }
 
 
+@media(max-width: 768px) {
+  .home_conteudo {
+    background-image: url('../../Imgs/bannerMobille.png');
+    background-position: bottom;
+    height: 740px;
+    padding: 20px 0px;
+  }
+
+  .home_conteudo .home_content {
+    max-width: 500px;
+    width: 98%;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  
+.home_conteudo .home_content .container_buttons {
+  margin: 0 auto;
+}
+
+.home_conteudo .home_content p {
+  font-size: 17px;
+
+}
+
+
+
+}
+
+
 @keyframes aparecerPop {
   0%{
     opacity: 0;
