@@ -15,7 +15,7 @@
 }
 
 body {
-  background-color: #F7F9FA;
+  background-color: #f0f0f0;
   color: var(--color-AZLESCURO);
 }
 
@@ -31,9 +31,10 @@ a {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.651);
   display: none;
   z-index: 10;
+  backdrop-filter: blur(1px);
 }
 
 /* ! Header */
@@ -93,21 +94,43 @@ a {
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
-  padding: 30px;
   border-radius: 10px;
   display: none;
   z-index: 20;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  max-width: 440px;
+  animation: aparecerPop 0.3s ease;
 }
 
 .popup .popup-content {
   display: flex;
   flex-direction: column;
+  gap: 24px;
+  position: relative;
+  padding: 60px 40px 40px 40px; 
+}
+
+.popup .popup-content .container_buttons{
+  display: flex;
   gap: 15px;
+  width: 100%;
+}
+
+.popup .popup-content .container_buttons button{
+
+  width: 100%;
+}
+
+.popup .popup-content .fechar{
+ position: absolute;
+ top: 10px;
+ right: 10px;
+ font-weight: 600;
 }
 
 .popup .popup-content h2 {
   color: var(--color-AZLESCURO);
+  font-size: 28px;
 }
 
 .popup .popup-content input {
@@ -128,7 +151,10 @@ a {
 
 .popup .popup-content button:hover {
   background: #e55a2f; /* Simulação do darken */
+  color: white;
 }
+
+
 
 .popup .popup-content .fechar {
   align-self: flex-end;
@@ -141,37 +167,42 @@ a {
 
 /* ! Sessão principal */
 .home_conteudo {
-  background: linear-gradient(to right, var(--color-AZLCLARO), var(--color-AZLESCURO));
+  background-image: url('../../Imgs/banner1.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   color: white;
   padding: 80px 0;
+  height: 530px;
 }
 
 .home_conteudo .home_content {
-  max-width: 800px;
-  margin: auto;
-  text-align: center;
+  max-width: 500px;
+  text-align: left;
 }
 
 .home_conteudo .home_content h1 {
-  font-size: 60px;
+  font-size: 48px;
   margin-bottom: 20px;
+  font-weight: 200;
+}
+
+.home_conteudo .home_content h1 span{
   font-weight: 700;
 }
 
 .home_conteudo .home_content p {
   font-size: 18px;
-  line-height: 1.6;
-  font-weight: 300;
+  line-height: 26px;
+  font-weight: 200;
   margin-bottom: 30px;
   color: #f0f0f0;
 }
 
 .home_conteudo .home_content .container_buttons {
   display: flex;
-  justify-content: center;
   max-width: 400px;
   width: 98%;
-  margin: 0 auto;
   gap: 20px;
 }
 .home_conteudo .home_content .container_buttons a{
@@ -182,32 +213,41 @@ width: 100%;
 /* ! Cards */
 
 .container_cards .card {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ background-color: #e4e4e4;
+  color: #000000;
+  border-radius: 15px;
   text-align: center;
-  padding: 20px;
   transition: 0.3s;
+  cursor: pointer;
+  padding-top: 14px;
+}
+
+.container_cards .card .card_content{
+padding: 0px 20px 20px 20px;
 }
 
 .container_cards .card:hover {
   transform: translateY(-5px);
+  box-shadow: 0px 8px 12px 2px rgba(0, 0, 0, 0.26);
 }
 
-.container_cards .card img {
-  height: 100px;
+.container_cards .card svg {
   margin-bottom: 15px;
   width: 100%;
 }
 
 .container_cards .card h2 {
   margin-bottom: 10px;
+  font-weight: 900;
+  
 }
 
 .container_cards .card p {
   font-size: 0.95rem;
-  min-height: 60px;
+  min-height: 70px;
 }
+
+
 
 /* ! Rodapé */
 .rodape {
@@ -247,4 +287,18 @@ width: 100%;
   max-width: 1280px;
   margin: 0 auto;
   width: 98%;
+}
+
+
+@keyframes aparecerPop {
+  0%{
+    opacity: 0;
+    margin-left: -50px;
+  }
+  
+  100%{
+    opacity: 1;
+    margin-left: 0px;
+   
+  }
 }

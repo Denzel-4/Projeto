@@ -50,7 +50,8 @@
 }
 
 .btn.btn_laranja:hover {
-    background-color: #e55a2f; /* Simulação do darken */
+    background-color: #d64f26; /* Simulação do darken */
+    transform: scale(0.98);
 }
 
 .btn.btn_laranja2 {
