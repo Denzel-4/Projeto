@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agendamentos - AutoFix</title>
+
+    <!-- Bootstrap CSS -->
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Link css -->
+
+    <link rel="stylesheet" href="Assets/Styles/agendamentos/agendamentos.css" />
+    />
+  </head>
+  <body>
+    <!-- Overlay -->
+    <div id="sobreposicao" class="modal" onclick="fecharTodosModais()"></div>
+
+    <!-- Cabeçalho -->
+    <header class="cabecalho">
+      <div class="container">
+        <div class="cabecalho-conteudo">
+          <a href="#" class="logo">
+            <i class="fas fa-wrench"></i>
+            AutoFix
+          </a>
+          <nav>
+            <ul class="menu-navegacao">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="">Serviços</a></li>
+              <li><a href="">Sobre</a></li>
+              <li><a href="#">Contato</a></li>
+            </ul>
+          </nav>
+          <div class="cabecalho-botoes">
+            <a href="./cadastro.html" class="botao botao-contorno">
+              <i class="fas fa-sign-in-alt"></i>
+              Login
+            </a>
+            <button
+              class="botao botao-primario"
+              onclick="abrirModal('novoAgendamentoModal')"
+            >
+              <i class="fas fa-calendar-plus"></i>
+              Agendar
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Título da Página -->
+    <section class="titulo-pagina">
+      <div class="container">
+        <h1>Minha <span class="destaque">Conta</span></h1>
+        <p>Gerencie seus agendamentos e histórico de serviços</p>
+      </div>
+    </section>
+
+    <!-- Conteúdo Principal -->
+    <main class="conteudo-principal">
+      <div class="container">
+        <!-- Mensagem de Sucesso -->
+        <div id="mensagemSucesso" class="mensagem-sucesso">
+          <i class="fas fa-check-circle"></i>
+          <span id="textoSucesso">Operação realizada com sucesso!</span>
+        </div>
+
+        <!-- Abas -->
+        <div class="abas">
+          <div class="botoes-aba">
+            <button class="botao-aba ativo" onclick="trocarAba('agendamentos')">
+              <i class="fas fa-calendar-check"></i>
+              Agendamentos
+            </button>
+            <button class="botao-aba" onclick="trocarAba('servicos')">
+              <i class="fas fa-tools"></i>
+              Serviços
+            </button>
+            <button class="botao-aba" onclick="trocarAba('historico')">
+              <i class="fas fa-history"></i>
+              Histórico
+            </button>
+          </div>
+
+          <!-- Aba de Agendamentos -->
+          <div id="agendamentos" class="conteudo-aba ativo">
+            <div class="cabecalho-secao">
+              <h2 class="titulo-secao">Meus Agendamentos</h2>
+              <button
+                class="botao botao-primario"
+                onclick="abrirModal('novoAgendamentoModal')"
+              >
+                <i class="fas fa-plus"></i>
+                Novo Agendamento
+              </button>
+            </div>
+            <div id="listaAgendamentos">
+              <!-- Agendamentos serão inseridos aqui via JavaScript -->
+            </div>
+          </div>
+
+          <!-- Aba de Serviços -->
+          <div id="servicos" class="conteudo-aba">
+            <h2 class="titulo-secao">Serviços Disponíveis</h2>
+            <div class="grade-servicos">
+              <div class="cartao">
+                <div class="cartao-conteudo cartao-servico">
+                  <div class="icone-servico">
+                    <i class="fas fa-tools"></i>
+                  </div>
+                  <h3 class="titulo-servico">Revisão Completa</h3>
+                  <p class="descricao-servico">
+                    Troca de óleo, filtros, verificação completa do veículo
+                  </p>
+                  <div class="detalhes-servico">
+                    <div class="detalhe-servico">
+                      <i class="fas fa-clock"></i>
+                      Duração: 2 horas
+                    </div>
+                    <div class="detalhe-servico">
+                      <i class="fas fa-shield-alt"></i>
+                      Garantia: 3 meses
+                    </div>
+                  </div>
+                  <div class="preco-servico">A partir de R$ 350,00</div>
+                  <button
+                    class="botao botao-primario"
+                    style="width: 100%"
+                    onclick="agendarServico('Revisão Completa')"
+                  >
+                    Agendar
+                  </button>
+                </div>
+              </div>
+
+              <div class="cartao">
+                <div class="cartao-conteudo cartao-servico">
+                  <div class="icone-servico">
+                    <i class="fas fa-cog"></i>
+                  </div>
+                  <h3 class="titulo-servico">Alinhamento</h3>
+                  <p class="descricao-servico">
+                    Alinhamento e balanceamento computadorizado
+                  </p>
+                  <div class="detalhes-servico">
+                    <div class="detalhe-servico">
+                      <i class="fas fa-clock"></i>
+                      Duração: 1 hora
+                    </div>
+                    <div class="detalhe-servico">
+                      <i class="fas fa-shield-alt"></i>
+                      Garantia: 3 meses
+                    </div>
+                  </div>
+                  <div class="preco-servico">A partir de R$ 180,00</div>
+                  <button
+                    class="botao botao-primario"
+                    style="width: 100%"
+                    onclick="agendarServico('Alinhamento')"
+                  >
+                    Agendar
+                  </button>
+                </div>
+              </div>
+
+              <div class="cartao">
+                <div class="cartao-conteudo cartao-servico">
+                  <div class="icone-servico">
+                    <i class="fas fa-bolt"></i>
+                  </div>
+                  <h3 class="titulo-servico">Sistema Elétrico</h3>
+                  <p class="descricao-servico">
+                    Diagnóstico e reparo do sistema elétrico
+                  </p>
+                  <div class="detalhes-servico">
+                    <div class="detalhe-servico">
+                      <i class="fas fa-clock"></i>
+                      Duração: 1-3 horas
+                    </div>
+                    <div class="detalhe-servico">
+                      <i class="fas fa-shield-alt"></i>
+                      Garantia: 6 meses
+                    </div>
+                  </div>
+                  <div class="preco-servico">A partir de R$ 250,00</div>
+                  <button
+                    class="botao botao-primario"
+                    style="width: 100%"
+                    onclick="agendarServico('Sistema Elétrico')"
+                  >
+                    Agendar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aba de Histórico -->
+          <div id="historico" class="conteudo-aba">
+            <h2 class="titulo-secao">Histórico de Serviços</h2>
+            <div id="listaHistorico">
+              <!-- Histórico será inserido aqui via JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal Novo Agendamento -->
+    <div id="novoAgendamentoModal" class="modal">
+      <div class="modal-conteudo">
+        <div class="modal-cabecalho">
+          <h2 class="modal-titulo">Novo Agendamento</h2>
+          <button
+            class="botao-fechar"
+            onclick="fecharModal('novoAgendamentoModal')"
+          >
+            &times;
+          </button>
+        </div>
+        <form id="formNovoAgendamento">
+          <div class="grupo-formulario">
+            <label class="rotulo-formulario">Veículo</label>
+            <select id="veiculo" class="selecao-formulario" required>
+              <option value="">Selecione seu veículo</option>
+              <option value="Honda Civic - ABC-1234">
+                Honda Civic - ABC-1234
+              </option>
+              <option value="Toyota Corolla - DEF-5678">
+                Toyota Corolla - DEF-5678
+              </option>
+              <option value="Volkswagen Golf - GHI-9012">
+                Volkswagen Golf - GHI-9012
+              </option>
+            </select>
+          </div>
+          <div class="grupo-formulario">
+            <label class="rotulo-formulario">Serviço</label>
+            <select id="servico" class="selecao-formulario" required>
+              <option value="">Selecione o serviço</option>
+              <option value="Revisão Completa">Revisão Completa</option>
+              <option value="Alinhamento">Alinhamento</option>
+              <option value="Sistema Elétrico">Sistema Elétrico</option>
+              <option value="Troca de Óleo">Troca de Óleo</option>
+              <option value="Revisão de Freios">Revisão de Freios</option>
+            </select>
+          </div>
+          <div class="linha-formulario">
+            <div class="grupo-formulario">
+              <label class="rotulo-formulario">Data</label>
+              <input
+                type="date"
+                id="data"
+                class="entrada-formulario"
+                required
+              />
+            </div>
+            <div class="grupo-formulario">
+              <label class="rotulo-formulario">Horário</label>
+              <select id="horario" class="selecao-formulario" required>
+                <option value="">Selecione o horário</option>
+                <option value="08:00">08:00</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+              </select>
+            </div>
+          </div>
+          <div class="grupo-formulario">
+            <label class="rotulo-formulario">Observações (opcional)</label>
+            <textarea
+              id="observacoes"
+              class="area-texto-formulario"
+              rows="3"
+              placeholder="Descreva detalhes sobre o problema..."
+            ></textarea>
+          </div>
+          <div class="acoes-modal">
+            <button
+              type="button"
+              class="botao botao-secundario"
+              onclick="fecharModal('novoAgendamentoModal')"
+            >
+              Cancelar
+            </button>
+            <button type="submit" class="botao botao-primario">Agendar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal Editar Agendamento -->
+    <div id="editarAgendamentoModal" class="modal">
+      <div class="modal-conteudo">
+        <div class="modal-cabecalho">
+          <h2 class="modal-titulo">Editar Agendamento</h2>
+          <button
+            class="botao-fechar"
+            onclick="fecharModal('editarAgendamentoModal')"
+          >
+            &times;
+          </button>
+        </div>
+        <form id="formEditarAgendamento">
+          <input type="hidden" id="editId" />
+          <div class="grupo-formulario">
+            <label class="rotulo-formulario">Veículo</label>
+            <select id="editVeiculo" class="selecao-formulario" required>
+              <option value="">Selecione seu veículo</option>
+              <option value="Honda Civic - ABC-1234">
+                Honda Civic - ABC-1234
+              </option>
+              <option value="Toyota Corolla - DEF-5678">
+                Toyota Corolla - DEF-5678
+              </option>
+              <option value="Volkswagen Golf - GHI-9012">
+                Volkswagen Golf - GHI-9012
+              </option>
+            </select>
+          </div>
+          <div class="grupo-formulario">
+            <label class="rotulo-formulario">Serviço</label>
+            <select id="editServico" class="selecao-formulario" required>
+              <option value="">Selecione o serviço</option>
+              <option value="Revisão Completa">Revisão Completa</option>
+              <option value="Alinhamento">Alinhamento</option>
+              <option value="Sistema Elétrico">Sistema Elétrico</option>
+              <option value="Troca de Óleo">Troca de Óleo</option>
+              <option value="Revisão de Freios">Revisão de Freios</option>
+            </select>
+          </div>
+          <div class="linha-formulario">
+            <div class="grupo-formulario">
+              <label class="rotulo-formulario">Data</label>
+              <input
+                type="date"
+                id="editData"
+                class="entrada-formulario"
+                required
+              />
+            </div>
+            <div class="grupo-formulario">
+              <label class="rotulo-formulario">Horário</label>
+              <select id="editHorario" class="selecao-formulario" required>
+                <option value="">Selecione o horário</option>
+                <option value="08:00">08:00</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+              </select>
+            </div>
+          </div>
+          <div class="grupo-formulario">
+            <label class="rotulo-formulario">Observações</label>
+            <textarea
+              id="editObservacoes"
+              class="area-texto-formulario"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="acoes-modal">
+            <button
+              type="button"
+              class="botao botao-secundario"
+              onclick="fecharModal('editarAgendamentoModal')"
+            >
+              Cancelar
+            </button>
+            <button type="submit" class="botao botao-primario">
+              Salvar Alterações
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="rodape">
+      <div class="container">
+        <p>
+          <a href="#">Política de Privacidade</a> |
+          <a href="#">Termos de Uso</a> |
+          <a href="#">Fale Conosco</a>
+        </p>
+        <p>© 2025 AutoFix - Todos os direitos reservados</p>
+      </div>
+    </footer>
+
+    <script>
+      // Dados dos agendamentos
+      let agendamentos = [
+        {
+          id: 1,
+          veiculo: "Honda Civic - ABC-1234",
+          servico: "Revisão Completa",
+          data: "2025-06-15",
+          horario: "09:30",
+          status: "pendente",
+          observacoes: "Verificar ruído no motor",
+        },
+        {
+          id: 2,
+          veiculo: "Honda Civic - ABC-1234",
+          servico: "Alinhamento",
+          data: "2025-06-22",
+          horario: "14:00",
+          status: "confirmado",
+          observacoes: "",
+        },
+      ];
+
+      // Dados do histórico
+      const historico = [
+        {
+          id: "h1",
+          veiculo: "Honda Civic - ABC-1234",
+          servico: "Troca de Óleo",
+          data: "2025-05-10",
+          horario: "10:00",
+          status: "concluido",
+          valor: 320,
+          observacoes: "Serviço realizado com sucesso",
+        },
+        {
+          id: "h2",
+          veiculo: "Honda Civic - ABC-1234",
+          servico: "Revisão de Freios",
+          data: "2025-04-25",
+          horario: "15:00",
+          status: "concluido",
+          valor: 280,
+          observacoes: "Troca de pastilhas e verificação do sistema",
+        },
+      ];
+
+      let proximoId = 3;
+
+      // Funções de navegação
+      function trocarAba(nomeAba) {
+        // Remove ativo de todos os botões e conteúdos
+        document
+          .querySelectorAll(".botao-aba")
+          .forEach((btn) => btn.classList.remove("ativo"));
+        document
+          .querySelectorAll(".conteudo-aba")
+          .forEach((content) => content.classList.remove("ativo"));
+
+        // Adiciona ativo ao botão e conteúdo selecionado
+        event.target.classList.add("ativo");
+        document.getElementById(nomeAba).classList.add("ativo");
+
+        // Renderiza o conteúdo se necessário
+        if (nomeAba === "agendamentos") {
+          renderizarAgendamentos();
+        } else if (nomeAba === "historico") {
+          renderizarHistorico();
+        }
+      }
+
+      // Funções de modal
+      function abrirModal(modalId) {
+        document.getElementById(modalId).classList.add("ativo");
+      }
+
+      function fecharModal(modalId) {
+        document.getElementById(modalId).classList.remove("ativo");
+        // Limpa formulários
+        if (modalId === "novoAgendamentoModal") {
+          document.getElementById("formNovoAgendamento").reset();
+        }
+      }
+
+      function fecharTodosModais() {
+        document.querySelectorAll(".modal").forEach((modal) => {
+          modal.classList.remove("ativo");
+        });
+      }
+
+      // Função para mostrar mensagem de sucesso
+      function mostrarMensagemSucesso(mensagem) {
+        const divSucesso = document.getElementById("mensagemSucesso");
+        const textoSucesso = document.getElementById("textoSucesso");
+        textoSucesso.textContent = mensagem;
+        divSucesso.classList.add("mostrar");
+
+        setTimeout(() => {
+          divSucesso.classList.remove("mostrar");
+        }, 3000);
+      }
+
+      // Função para formatar data
+      function formatarData(dataString) {
+        const data = new Date(dataString + "T00:00:00");
+        const dia = data.getDate().toString().padStart(2, "0");
+        const meses = [
+          "JAN",
+          "FEV",
+          "MAR",
+          "ABR",
+          "MAI",
+          "JUN",
+          "JUL",
+          "AGO",
+          "SET",
+          "OUT",
+          "NOV",
+          "DEZ",
+        ];
+        const mes = meses[data.getMonth()];
+        return { dia, mes };
+      }
+
+      // Função para obter selo de status
+      function getSeloStatus(status) {
+        const selos = {
+          pendente: '<span class="selo-status status-pendente">Pendente</span>',
+          confirmado:
+            '<span class="selo-status status-confirmado">Confirmado</span>',
+          concluido:
+            '<span class="selo-status status-concluido">Concluído</span>',
+        };
+        return selos[status] || '<span class="selo-status">Desconhecido</span>';
+      }
+
+      // Função para obter descrição do serviço
+      function getDescricaoServico(servico) {
+        const descricoes = {
+          "Revisão Completa":
+            "Troca de óleo, filtros, verificação completa do veículo",
+          Alinhamento: "Alinhamento e balanceamento computadorizado",
+          "Sistema Elétrico": "Diagnóstico e reparo do sistema elétrico",
+          "Troca de Óleo": "Troca de óleo do motor e filtros",
+          "Revisão de Freios": "Troca de pastilhas e verificação do sistema",
+        };
+        return descricoes[servico] || "Serviço automotivo especializado";
+      }
+
+      // Renderizar agendamentos
+      function renderizarAgendamentos() {
+        const container = document.getElementById("listaAgendamentos");
+
+        if (agendamentos.length === 0) {
+          container.innerHTML = `
+                    <div class="cartao">
+                        <div class="cartao-conteudo estado-vazio">
+                            <i class="fas fa-calendar-check"></i>
+                            <h3>Nenhum agendamento encontrado</h3>
+                            <p>Você ainda não possui agendamentos. Que tal agendar um serviço?</p>
+                            <button class="botao botao-primario" onclick="abrirModal('novoAgendamentoModal')">
+                                <i class="fas fa-plus"></i>
+                                Criar Primeiro Agendamento
+                            </button>
+                        </div>
+                    </div>
+                `;
+          return;
+        }
+
+        container.innerHTML = agendamentos
+          .map((agendamento) => {
+            const { dia, mes } = formatarData(agendamento.data);
+            return `
+                    <div class="cartao">
+                        <div class="cartao-conteudo">
+                            <div class="cartao-agendamento">
+                                <div class="caixa-data">
+                                    <div class="dia">${dia}</div>
+                                    <div class="mes">${mes}</div>
+                                    <div class="hora">${
+                                      agendamento.horario
+                                    }</div>
+                                </div>
+                                <div class="info-agendamento">
+                                    <div class="cabecalho-agendamento">
+                                        <h3 class="titulo-agendamento">${
+                                          agendamento.servico
+                                        }</h3>
+                                        ${getSeloStatus(agendamento.status)}
+                                    </div>
+                                    <p class="descricao-agendamento">${getDescricaoServico(
+                                      agendamento.servico
+                                    )}</p>
+                                    <div class="veiculo-agendamento">
+                                        <i class="fas fa-car"></i>
+                                        ${agendamento.veiculo}
+                                    </div>
+                                    ${
+                                      agendamento.observacoes
+                                        ? `<p style="margin-top: 0.5rem; font-size: 0.9rem;"><strong>Observações:</strong> ${agendamento.observacoes}</p>`
+                                        : ""
+                                    }
+                                </div>
+                                <div class="acoes-agendamento">
+                                    <button class="botao botao-secundario botao-pequeno" onclick="editarAgendamento(${
+                                      agendamento.id
+                                    })">
+                                        <i class="fas fa-edit"></i>
+                                        Editar
+                                    </button>
+                                    <button class="botao botao-perigo botao-pequeno" onclick="cancelarAgendamento(${
+                                      agendamento.id
+                                    })">
+                                        <i class="fas fa-times"></i>
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+          })
+          .join("");
+      }
+
+      // Renderizar histórico
+      function renderizarHistorico() {
+        const container = document.getElementById("listaHistorico");
+
+        container.innerHTML = historico
+          .map((item) => {
+            const { dia, mes } = formatarData(item.data);
+            const garantiaData = new Date(item.data);
+            garantiaData.setMonth(garantiaData.getMonth() + 3);
+
+            return `
+                    <div class="cartao">
+                        <div class="cartao-conteudo">
+                            <div class="cartao-agendamento">
+                                <div style="background: #f8f9fa; color: #495057; border-left: 4px solid var(--cor-laranja);" class="caixa-data">
+                                    <div class="dia">${dia}</div>
+                                    <div class="mes">${mes}</div>
+                                    <div style="font-size: 0.7rem;">2025</div>
+                                </div>
+                                <div class="info-agendamento">
+                                    <div class="cabecalho-agendamento">
+                                        <h3 class="titulo-agendamento">${
+                                          item.servico
+                                        }</h3>
+                                        ${getSeloStatus(item.status)}
+                                    </div>
+                                    <p class="descricao-agendamento">${
+                                      item.observacoes
+                                    }</p>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 0.5rem; font-size: 0.9rem;">
+                                        <div><strong>Veículo:</strong> ${
+                                          item.veiculo
+                                        }</div>
+                                        <div><strong>Valor:</strong> R$ ${item.valor.toFixed(
+                                          2
+                                        )}</div>
+                                        <div><strong>Garantia até:</strong> ${garantiaData.toLocaleDateString(
+                                          "pt-BR"
+                                        )}</div>
+                                    </div>
+                                </div>
+                                <div class="acoes-agendamento">
+                                    <button class="botao botao-secundario botao-pequeno">
+                                        <i class="fas fa-file-alt"></i>
+                                        Detalhes
+                                    </button>
+                                    <button class="botao botao-primario botao-pequeno" onclick="agendarServico('${
+                                      item.servico
+                                    }')">
+                                        <i class="fas fa-redo"></i>
+                                        Reagendar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+          })
+          .join("");
+      }
+
+      // Criar novo agendamento
+      function criarAgendamento(event) {
+        event.preventDefault();
+
+        const veiculo = document.getElementById("veiculo").value;
+        const servico = document.getElementById("servico").value;
+        const data = document.getElementById("data").value;
+        const horario = document.getElementById("horario").value;
+        const observacoes = document.getElementById("observacoes").value;
+
+        if (!veiculo || !servico || !data || !horario) {
+          alert("Por favor, preencha todos os campos obrigatórios.");
+          return;
+        }
+
+        const novoAgendamento = {
+          id: proximoId++,
+          veiculo,
+          servico,
+          data,
+          horario,
+          status: "pendente",
+          observacoes,
+        };
+
+        agendamentos.push(novoAgendamento);
+        renderizarAgendamentos();
+        fecharModal("novoAgendamentoModal");
+        mostrarMensagemSucesso("Agendamento criado com sucesso!");
+      }
+
+      // Editar agendamento
+      function editarAgendamento(id) {
+        const agendamento = agendamentos.find((a) => a.id === id);
+        if (!agendamento) return;
+
+        document.getElementById("editId").value = id;
+        document.getElementById("editVeiculo").value = agendamento.veiculo;
+        document.getElementById("editServico").value = agendamento.servico;
+        document.getElementById("editData").value = agendamento.data;
+        document.getElementById("editHorario").value = agendamento.horario;
+        document.getElementById("editObservacoes").value =
+          agendamento.observacoes;
+
+        abrirModal("editarAgendamentoModal");
+      }
+
+      // Salvar edição
+      function salvarEdicao(event) {
+        event.preventDefault();
+
+        const id = parseInt(document.getElementById("editId").value);
+        const veiculo = document.getElementById("editVeiculo").value;
+        const servico = document.getElementById("editServico").value;
+        const data = document.getElementById("editData").value;
+        const horario = document.getElementById("editHorario").value;
+        const observacoes = document.getElementById("editObservacoes").value;
+
+        const index = agendamentos.findIndex((a) => a.id === id);
+        if (index !== -1) {
+          agendamentos[index] = {
+            ...agendamentos[index],
+            veiculo,
+            servico,
+            data,
+            horario,
+            observacoes,
+          };
+
+          renderizarAgendamentos();
+          fecharModal("editarAgendamentoModal");
+          mostrarMensagemSucesso("Agendamento atualizado com sucesso!");
+        }
+      }
+
+      // Cancelar agendamento
+      function cancelarAgendamento(id) {
+        if (confirm("Tem certeza que deseja cancelar este agendamento?")) {
+          agendamentos = agendamentos.filter((a) => a.id !== id);
+          renderizarAgendamentos();
+          mostrarMensagemSucesso("Agendamento cancelado com sucesso!");
+        }
+      }
+
+      // Agendar serviço específico
+      function agendarServico(nomeServico) {
+        document.getElementById("servico").value = nomeServico;
+        abrirModal("novoAgendamentoModal");
+      }
+
+      // Event listeners
+      document
+        .getElementById("formNovoAgendamento")
+        .addEventListener("submit", criarAgendamento);
+      document
+        .getElementById("formEditarAgendamento")
+        .addEventListener("submit", salvarEdicao);
+
+      // Fechar modal ao clicar fora
+      document.querySelectorAll(".modal").forEach((modal) => {
+        modal.addEventListener("click", function (e) {
+          if (e.target === this) {
+            this.classList.remove("ativo");
+          }
+        });
+      });
+
+      // Definir data mínima como hoje
+      const hoje = new Date().toISOString().split("T")[0];
+      document.getElementById("data").setAttribute("min", hoje);
+      document.getElementById("editData").setAttribute("min", hoje);
+
+      // Inicializar página
+      document.addEventListener("DOMContentLoaded", function () {
+        renderizarAgendamentos();
+      });
+    </script>
+  </body>
+</html>
