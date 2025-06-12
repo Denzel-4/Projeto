@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel Administrativo - AutoFix</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="Assets/Styles/global/user-menu.css" />
+    <link rel="stylesheet" href="Assets/Styles/admin/admin.css" />
+  </head>
+  <body>
+    <header class="cabecario_header">
+      <div class="container_nagavegacao">
+        <a href="index.html" class="logo">
+          <i class="fas fa-car-alt"></i> AUTOFIX
+        </a>
+        <nav class="navegacao">
+          <a href="index.html"><i class="fas fa-home"></i> Página Inicial</a>
+          <a href="meus-agendamentos.html"
+            ><i class="fas fa-calendar-check"></i> Meus Agendamentos</a
+          >
+          <div id="user-area"></div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="admin-container">
+        <div class="admin-header">
+          <h1><i class="fas fa-tools"></i> Painel Administrativo</h1>
+          <div>
+            <button
+              onclick="abrirConfigEmail()"
+              class="btn-atualizar"
+              style="margin-right: 10px"
+            >
+              <i class="fas fa-envelope-open-text"></i> Config Email
+            </button>
+            <button onclick="atualizarDados()" class="btn-atualizar">
+              <i class="fas fa-sync-alt"></i> Atualizar
+            </button>
+          </div>
+        </div>
+
+        <div class="admin-stats">
+          <div class="stat-card">
+            <i class="fas fa-calendar-check"></i>
+            <h3 id="total-agendamentos">0</h3>
+            <p>Total de Agendamentos</p>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-clock"></i>
+            <h3 id="pendentes">0</h3>
+            <p>Pendentes</p>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-check-circle"></i>
+            <h3 id="confirmados">0</h3>
+            <p>Confirmados</p>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-flag-checkered"></i>
+            <h3 id="finalizados">0</h3>
+            <p>Finalizados</p>
+          </div>
+        </div>
+
+        <div class="filtros-admin">
+          <select
+            id="filtro-status-admin"
+            onchange="filtrarAgendamentosAdmin()"
+          >
+            <option value="todos">Todos os Status</option>
+            <option value="Pendente">Pendente</option>
+            <option value="Confirmado">Confirmado</option>
+            <option value="Cancelado">Cancelado</option>
+            <option value="Finalizado">Finalizado</option>
+          </select>
+
+          <select id="filtro-data-admin" onchange="filtrarAgendamentosAdmin()">
+            <option value="todos">Todas as Datas</option>
+            <option value="hoje">Hoje</option>
+            <option value="semana">Esta Semana</option>
+            <option value="mes">Este Mês</option>
+          </select>
+
+          <select
+            id="filtro-servico-admin"
+            onchange="filtrarAgendamentosAdmin()"
+          >
+            <option value="todos">Todos os Serviços</option>
+            <option value="revisao">Revisão Preventiva</option>
+            <option value="freios">Troca de Freios</option>
+            <option value="bateria">Troca de Bateria</option>
+            <option value="pneus">Alinhamento e Balanceamento</option>
+            <option value="ar">Manutenção de Ar Condicionado</option>
+            <option value="diagnostico">Diagnóstico Eletrônico</option>
+          </select>
+        </div>
+
+        <div class="agendamentos-admin">
+          <div id="loading-admin" class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Carregando agendamentos...</p>
+          </div>
+
+          <table
+            class="agendamentos-table"
+            id="tabela-agendamentos"
+            style="display: none"
+          >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Data/Hora</th>
+                <th>Veículo</th>
+                <th>Serviços</th>
+                <th>Status</th>
+                <th>Valor</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-agendamentos">
+              <!-- Agendamentos serão inseridos aqui -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal de Configuração de Email -->
+    <div id="modalConfigEmail" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="fecharConfigEmail()">&times;</span>
+        <h2><i class="fas fa-envelope-open-text"></i> Configuração de Email</h2>
+        <p>
+          Configure as credenciais do EmailJS para envio automático de emails:
+        </p>
+
+        <div class="config-form">
+          <label for="emailjs-public-key">Public Key do EmailJS:</label>
+          <input
+            type="text"
+            id="emailjs-public-key"
+            placeholder="Seu Public Key do EmailJS"
+          />
+
+          <label for="emailjs-service-id">Service ID:</label>
+          <input
+            type="text"
+            id="emailjs-service-id"
+            placeholder="Seu Service ID"
+          />
+
+          <label for="emailjs-template-id">Template ID:</label>
+          <input
+            type="text"
+            id="emailjs-template-id"
+            placeholder="Seu Template ID"
+          />
+
+          <button onclick="salvarConfigEmail()">
+            <i class="fas fa-save"></i> Salvar Configuração
+          </button>
+
+          <button onclick="testarEmail()" style="background: #28a745">
+            <i class="fas fa-paper-plane"></i> Testar Email
+          </button>
+        </div>
+
+        <div
+          style="
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+          "
+        >
+          <h4>Como configurar:</h4>
+          <ol>
+            <li>
+              Acesse
+              <a href="https://www.emailjs.com/" target="_blank">emailjs.com</a>
+            </li>
+            <li>Crie uma conta gratuita</li>
+            <li>Configure um serviço de email (Gmail, Outlook, etc.)</li>
+            <li>Crie um template de email</li>
+            <li>Copie os IDs e cole aqui</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <script>
+      // Configuração do Firebase
+      const firebaseConfig = {
+        apiKey: "AIzaSyA4ek9mJ3RomY25W4uTq4M7AHy2Q3a24iU",
+        authDomain: "projeto-ec888.firebaseapp.com",
+        projectId: "projeto-ec888",
+        storageBucket: "projeto-ec888.firebasestorage.app",
+        messagingSenderId: "818995568430",
+        appId: "1:818995568430:web:7b3b1c3465e1c815e324bf",
+      };
+
+      // Inicializar Firebase
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+
+      // Variáveis globais
+      let currentUser = null;
+      let isAdmin = false;
+      let todosAgendamentos = [];
+      let agendamentosFiltrados = [];
+
+      // Configuração do EmailJS (será carregada do Firestore)
+      let emailjsConfig = {
+        publicKey: "",
+        serviceId: "",
+        templateId: "",
+      };
+
+      // Carregar configuração do Firestore
+      async function carregarConfigEmailJS() {
+        try {
+          const configDoc = await db
+            .collection("configuracoes")
+            .doc("emailjs")
+            .get();
+          if (configDoc.exists) {
+            const config = configDoc.data();
+            emailjsConfig = {
+              publicKey: config.publicKey || "",
+              serviceId: config.serviceId || "",
+              templateId: config.templateId || "",
+            };
+
+            // Inicializar EmailJS se configurado
+            if (emailjsConfig.publicKey) {
+              emailjs.init(emailjsConfig.publicKey);
+              console.log("EmailJS configurado automaticamente");
+            }
+          }
+        } catch (error) {
+          console.error("Erro ao carregar configuração EmailJS:", error);
+        }
+      }
+
+      // Mapeamento de serviços
+      const servicosInfo = {
+        revisao: { nome: "Revisão Preventiva", preco: 299.9 },
+        freios: { nome: "Troca de Freios", preco: 189.9 },
+        bateria: { nome: "Troca de Bateria", preco: 249.9 },
+        pneus: { nome: "Alinhamento e Balanceamento", preco: 159.9 },
+        ar: { nome: "Manutenção de Ar Condicionado", preco: 179.9 },
+        diagnostico: { nome: "Diagnóstico Eletrônico", preco: 129.9 },
+      };
+
+      const marcasNomes = {
+        chevrolet: "Chevrolet",
+        fiat: "Fiat",
+        ford: "Ford",
+        honda: "Honda",
+        hyundai: "Hyundai",
+        toyota: "Toyota",
+        volkswagen: "Volkswagen",
+      };
+
+      // Verificar autenticação e permissões de admin
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          currentUser = user;
+          verificarPermissoesAdmin();
+        } else {
+          mostrarNotificacao(
+            "Você precisa estar logado para acessar o painel administrativo",
+            "erro"
+          );
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 2000);
+        }
+      });
+
+      function verificarPermissoesAdmin() {
+        db.collection("users")
+          .doc(currentUser.uid)
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              const userData = doc.data();
+              isAdmin = userData.isAdmin || false;
+
+              if (!isAdmin) {
+                mostrarNotificacao(
+                  "Acesso negado. Você não é um administrador.",
+                  "erro"
+                );
+                setTimeout(() => {
+                  window.location.href = "index.html";
+                }, 2000);
+                return;
+              }
+
+              const nomeUsuario =
+                userData.dadosPessoais?.nome ||
+                currentUser.displayName ||
+                currentUser.email.split("@")[0];
+              document.getElementById("user-area").innerHTML = `
+                        <span style="color: white;">Admin: ${nomeUsuario}</span>
+                    `;
+
+              // Carregar configuração do EmailJS
+              carregarConfigEmailJS();
+              carregarTodosAgendamentos();
+            }
+          })
+          .catch((error) => {
+            console.error("Erro ao verificar permissões:", error);
+            mostrarNotificacao("Erro ao verificar permissões", "erro");
+          });
+      }
+
+      function carregarTodosAgendamentos() {
+        db.collection("agendamentos")
+          .orderBy("dataCriacao", "desc")
+          .get()
+          .then((querySnapshot) => {
+            todosAgendamentos = [];
+            querySnapsorhot.fEach((doc) => {
+              todosAgendamentos.push({ id: doc.id, ...doc.data() });
+            });
+
+            atualizarEstatisticas();
+            renderizarTabelaAgendamentos(todosAgendamentos);
+
+            document.getElementById("loading-admin").style.display = "none";
+            document.getElementById("tabela-agendamentos").style.display =
+              "table";
+          })
+          .catch((error) => {
+            console.error("Erro ao carregar agendamentos:", error);
+            mostrarNotificacao("Erro ao carregar agendamentos", "erro");
+          });
+      }
+
+      function atualizarEstatisticas() {
+        const total = todosAgendamentos.length;
+        const pendentes = todosAgendamentos.filter(
+          (a) => a.status === "Pendente"
+        ).length;
+        const confirmados = todosAgendamentos.filter(
+          (a) => a.status === "Confirmado"
+        ).length;
+        const finalizados = todosAgendamentos.filter(
+          (a) => a.status === "Finalizado"
+        ).length;
+
+        document.getElementById("total-agendamentos").textContent = total;
+        document.getElementById("pendentes").textContent = pendentes;
+        document.getElementById("confirmados").textContent = confirmados;
+        document.getElementById("finalizados").textContent = finalizados;
+      }
+
+      function renderizarTabelaAgendamentos(agendamentos) {
+        const tbody = document.getElementById("tbody-agendamentos");
+        tbody.innerHTML = "";
+
+        agendamentos.forEach((agendamento) => {
+          // Tratar data
+          let dataFormatada = "Data não disponível";
+          if (agendamento.data) {
+            try {
+              const dataObj = new Date(agendamento.data);
+              dataFormatada = dataObj.toLocaleDateString("pt-BR");
+            } catch (e) {
+              console.error("Erro ao formatar data:", e);
+            }
+          }
+
+          // Tratar serviços
+          const servicosNomes =
+            agendamento.servicos && agendamento.servicos.length > 0
+              ? agendamento.servicos
+                  .map((s) => servicosInfo[s]?.nome || s)
+                  .join(", ")
+              : "Nenhum serviço";
+
+          // Tratar veículo (considerando que pode ser array ou objeto)
+          let veiculoInfo = "Não informado";
+          if (agendamento.veiculo) {
+            if (
+              Array.isArray(agendamento.veiculo) &&
+              agendamento.veiculo.length >= 4
+            ) {
+              // Formato array: [marca, modelo, ano, placa]
+              const marca =
+                marcasNomes[agendamento.veiculo[0]] || agendamento.veiculo[0];
+              veiculoInfo = `${marca} ${agendamento.veiculo[1]}<br><small>${agendamento.veiculo[2]} - ${agendamento.veiculo[3]}</small>`;
+            } else if (typeof agendamento.veiculo === "object") {
+              // Formato objeto: {marca, modelo, ano, placa}
+              const marca =
+                marcasNomes[agendamento.veiculo.marca] ||
+                agendamento.veiculo.marca;
+              veiculoInfo = `${marca} ${agendamento.veiculo.modelo}<br><small>${agendamento.veiculo.ano} - ${agendamento.veiculo.placa}</small>`;
+            }
+          }
+
+          const row = document.createElement("tr");
+          row.innerHTML = `
+                    <td>#${agendamento.id.substring(0, 8)}</td>
+                    <td>
+                        <strong>${agendamento.usuarioNome || "N/A"}</strong><br>
+                        <small>${agendamento.usuarioEmail || ""}</small><br>
+                        <small>${agendamento.usuarioTelefone || ""}</small>
+                    </td>
+                    <td>${dataFormatada}<br><small>${
+            agendamento.horario || ""
+          }</small></td>
+                    <td>${veiculoInfo}</td>
+                    <td><small>${servicosNomes}</small></td>
+                    <td>
+                        <span class="status-badge status-${
+                          agendamento.status
+                            ? agendamento.status.toLowerCase()
+                            : "pendente"
+                        }">
+                            ${agendamento.status || "Pendente"}
+                        </span>
+                    </td>
+                    <td>R$ ${
+                      typeof agendamento.valorTotal === "string"
+                        ? parseFloat(agendamento.valorTotal)
+                            .toFixed(2)
+                            .replace(".", ",")
+                        : (agendamento.valorTotal || 0)
+                            .toFixed(2)
+                            .replace(".", ",")
+                    }</td>
+                    <td>
+                        ${
+                          agendamento.status === "Pendente"
+                            ? `
+                            <button class="btn-acao btn-confirmar" onclick="confirmarAgendamento('${agendamento.id}')" id="btn-confirmar-${agendamento.id}">
+                                <i class="fas fa-check"></i> Confirmar
+                            </button>
+                        `
+                            : ""
+                        }
+                        ${
+                          agendamento.status === "Confirmado"
+                            ? `
+                            <button class="btn-acao btn-finalizar" onclick="finalizarAgendamento('${agendamento.id}')">
+                                <i class="fas fa-flag-checkered"></i> Finalizar
+                            </button>
+                        `
+                            : ""
+                        }
+                        ${
+                          agendamento.status !== "Cancelado" &&
+                          agendamento.status !== "Finalizado"
+                            ? `
+                            <button class="btn-acao btn-cancelar" onclick="cancelarAgendamentoAdmin('${agendamento.id}')">
+                                <i class="fas fa-times"></i> Cancelar
+                            </button>
+                        `
+                            : ""
+                        }
+                        <button class="btn-acao btn-excluir" onclick="excluirAgendamento('${
+                          agendamento.id
+                        }')" style="background: #6c757d; margin-top: 5px;">
+                            <i class="fas fa-trash"></i> Excluir
+                        </button>
+                    </td>
+                `;
+          tbody.appendChild(row);
+        });
+      }
+
+      function filtrarAgendamentosAdmin() {
+        const filtroStatus = document.getElementById(
+          "filtro-status-admin"
+        ).value;
+        const filtroData = document.getElementById("filtro-data-admin").value;
+        const filtroServico = document.getElementById(
+          "filtro-servico-admin"
+        ).value;
+
+        agendamentosFiltrados = todosAgendamentos.filter((agendamento) => {
+          if (filtroStatus !== "todos" && agendamento.status !== filtroStatus) {
+            return false;
+          }
+
+          if (
+            filtroServico !== "todos" &&
+            (!agendamento.servicos ||
+              !agendamento.servicos.includes(filtroServico))
+          ) {
+            return false;
+          }
+
+          if (filtroData !== "todos") {
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0);
+            const dataAgendamento = new Date(agendamento.data);
+
+            switch (filtroData) {
+              case "hoje":
+                return agendamento.data === hoje.toISOString().split("T")[0];
+              case "semana":
+                const fimSemana = new Date(hoje);
+                fimSemana.setDate(hoje.getDate() + (6 - hoje.getDay()));
+                return dataAgendamento >= hoje && dataAgendamento <= fimSemana;
+              case "mes":
+                return (
+                  dataAgendamento.getMonth() === hoje.getMonth() &&
+                  dataAgendamento.getFullYear() === hoje.getFullYear()
+                );
+            }
+          }
+
+          return true;
+        });
+
+        renderizarTabelaAgendamentos(agendamentosFiltrados);
+      }
+
+      async function confirmarAgendamento(id) {
+        const btnConfirmar = document.getElementById(`btn-confirmar-${id}`);
+        const agendamento = todosAgendamentos.find((a) => a.id === id);
+
+        try {
+          // Mostrar loading no botão
+          btnConfirmar.classList.add("loading");
+          btnConfirmar.disabled = true;
+          btnConfirmar.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Confirmando...';
+
+          // Atualizar status no Firestore
+          await db.collection("agendamentos").doc(id).update({
+            status: "Confirmado",
+            dataConfirmacao: new Date().toISOString(),
+          });
+
+          // ENVIO AUTOMÁTICO - sem perguntar
+          if (
+            emailjsConfig.publicKey &&
+            emailjsConfig.serviceId &&
+            emailjsConfig.templateId
+          ) {
+            try {
+              await enviarEmailConfirmacao(agendamento);
+              mostrarNotificacao(
+                "✅ Agendamento confirmado e email enviado automaticamente!",
+                "sucesso"
+              );
+            } catch (emailError) {
+              console.error("Erro ao enviar email:", emailError);
+              mostrarNotificacao(
+                "⚠️ Agendamento confirmado, mas houve erro no envio do email.",
+                "info"
+              );
+            }
+          } else {
+            mostrarNotificacao(
+              "✅ Agendamento confirmado! (Configure o EmailJS para envio automático)",
+              "sucesso"
+            );
+          }
+
+          // Atualizar a lista
+          atualizarDados();
+        } catch (error) {
+          console.error("Erro ao confirmar agendamento:", error);
+          mostrarNotificacao("❌ Erro ao confirmar agendamento.", "erro");
+
+          // Restaurar botão
+          btnConfirmar.classList.remove("loading");
+          btnConfirmar.disabled = false;
+          btnConfirmar.innerHTML = '<i class="fas fa-check"></i> Confirmar';
+        }
+      }
+
+      async function enviarEmailConfirmacao(agendamento) {
+        if (
+          !emailjsConfig.publicKey ||
+          !emailjsConfig.serviceId ||
+          !emailjsConfig.templateId
+        ) {
+          throw new Error("EmailJS não configurado");
+        }
+
+        // Formatar data
+        let dataFormatada = "Data não disponível";
+        if (agendamento.data) {
+          try {
+            const dataObj = new Date(agendamento.data);
+            dataFormatada = dataObj.toLocaleDateString("pt-BR");
+          } catch (e) {
+            dataFormatada = agendamento.data;
+          }
+        }
+
+        // Formatar veículo
+        let veiculoInfo = "Não informado";
+        if (agendamento.veiculo) {
+          if (
+            Array.isArray(agendamento.veiculo) &&
+            agendamento.veiculo.length >= 4
+          ) {
+            const marca =
+              marcasNomes[agendamento.veiculo[0]] || agendamento.veiculo[0];
+            veiculoInfo = `${marca} ${agendamento.veiculo[1]} ${agendamento.veiculo[2]} - ${agendamento.veiculo[3]}`;
+          } else if (typeof agendamento.veiculo === "object") {
+            const marca =
+              marcasNomes[agendamento.veiculo.marca] ||
+              agendamento.veiculo.marca;
+            veiculoInfo = `${marca} ${agendamento.veiculo.modelo} ${agendamento.veiculo.ano} - ${agendamento.veiculo.placa}`;
+          }
+        }
+
+        // Formatar serviços
+        const servicosTexto =
+          agendamento.servicos && agendamento.servicos.length > 0
+            ? agendamento.servicos
+                .map((s) => servicosInfo[s]?.nome || s)
+                .join(", ")
+            : "Nenhum serviço especificado";
+
+        // Parâmetros do template
+        const templateParams = {
+          to_name: agendamento.usuarioNome || "Cliente",
+          to_email: agendamento.usuarioEmail,
+          agendamento_id: agendamento.id.substring(0, 8),
+          data_agendamento: dataFormatada,
+          horario: agendamento.horario || "Não definido",
+          veiculo: veiculoInfo,
+          servicos: servicosTexto,
+          valor_total:
+            typeof agendamento.valorTotal === "string"
+              ? parseFloat(agendamento.valorTotal).toFixed(2).replace(".", ",")
+              : (agendamento.valorTotal || 0).toFixed(2).replace(".", ","),
+          local: agendamento.local || "AutoFix - Oficina Principal",
+        };
+
+        console.log("Enviando email com parâmetros:", templateParams);
+
+        // Enviar email
+        const response = await emailjs.send(
+          emailjsConfig.serviceId,
+          emailjsConfig.templateId,
+          templateParams
+        );
+
+        console.log("Email enviado com sucesso:", response);
+        return response;
+      }
+
+      function finalizarAgendamento(id) {
+        if (confirm("Finalizar este agendamento?")) {
+          db.collection("agendamentos")
+            .doc(id)
+            .update({
+              status: "Finalizado",
+              dataFinalizacao: new Date().toISOString(),
+            })
+            .then(() => {
+              mostrarNotificacao(
+                "Agendamento finalizado com sucesso!",
+                "sucesso"
+              );
+              atualizarDados();
+            })
+            .catch((error) => {
+              console.error("Erro ao finalizar agendamento:", error);
+              mostrarNotificacao("Erro ao finalizar agendamento", "erro");
+            });
+        }
+      }
+
+      function cancelarAgendamentoAdmin(id) {
+        if (confirm("Cancelar este agendamento?")) {
+          db.collection("agendamentos")
+            .doc(id)
+            .update({
+              status: "Cancelado",
+              dataCancelamento: new Date().toISOString(),
+            })
+            .then(() => {
+              mostrarNotificacao(
+                "Agendamento cancelado com sucesso!",
+                "sucesso"
+              );
+              atualizarDados();
+            })
+            .catch((error) => {
+              console.error("Erro ao cancelar agendamento:", error);
+              mostrarNotificacao("Erro ao cancelar agendamento", "erro");
+            });
+        }
+      }
+
+      async function excluirAgendamento(id) {
+        const agendamento = todosAgendamentos.find((a) => a.id === id);
+        const nomeCliente = agendamento?.usuarioNome || "Cliente";
+
+        // Confirmação dupla para evitar exclusões acidentais
+        if (
+          confirm(
+            `⚠️ ATENÇÃO: Você está prestes a EXCLUIR PERMANENTEMENTE o agendamento de ${nomeCliente}.\n\nEsta ação NÃO PODE ser desfeita!\n\nTem certeza que deseja continuar?`
+          )
+        ) {
+          if (
+            confirm(
+              `🗑️ CONFIRMAÇÃO FINAL: Excluir definitivamente o agendamento #${id.substring(
+                0,
+                8
+              )}?`
+            )
+          ) {
+            try {
+              // Excluir do Firestore
+              await db.collection("agendamentos").doc(id).delete();
+
+              mostrarNotificacao(
+                "🗑️ Agendamento excluído permanentemente!",
+                "sucesso"
+              );
+
+              // Atualizar a lista
+              atualizarDados();
+            } catch (error) {
+              console.error("Erro ao excluir agendamento:", error);
+              mostrarNotificacao("❌ Erro ao excluir agendamento.", "erro");
+            }
+          }
+        }
+      }
+
+      function atualizarDados() {
+        document.getElementById("loading-admin").style.display = "block";
+        document.getElementById("tabela-agendamentos").style.display = "none";
+        carregarTodosAgendamentos();
+      }
+
+      // Funções do modal de configuração de email
+      function abrirConfigEmail() {
+        document.getElementById("modalConfigEmail").style.display = "block";
+
+        // Carregar valores salvos do Firestore
+        document.getElementById("emailjs-public-key").value =
+          emailjsConfig.publicKey;
+        document.getElementById("emailjs-service-id").value =
+          emailjsConfig.serviceId;
+        document.getElementById("emailjs-template-id").value =
+          emailjsConfig.templateId;
+      }
+
+      function fecharConfigEmail() {
+        document.getElementById("modalConfigEmail").style.display = "none";
+      }
+
+      async function salvarConfigEmail() {
+        const publicKey = document
+          .getElementById("emailjs-public-key")
+          .value.trim();
+        const serviceId = document
+          .getElementById("emailjs-service-id")
+          .value.trim();
+        const templateId = document
+          .getElementById("emailjs-template-id")
+          .value.trim();
+
+        if (!publicKey || !serviceId || !templateId) {
+          mostrarNotificacao("Preencha todos os campos!", "erro");
+          return;
+        }
+
+        try {
+          // Salvar no Firestore
+          await db.collection("configuracoes").doc("emailjs").set({
+            publicKey: publicKey,
+            serviceId: serviceId,
+            templateId: templateId,
+            dataAtualizacao: new Date().toISOString(),
+            atualizadoPor: currentUser.email,
+          });
+
+          // Atualizar configuração global
+          emailjsConfig = { publicKey, serviceId, templateId };
+
+          // Inicializar EmailJS
+          emailjs.init(publicKey);
+
+          mostrarNotificacao("Configuração salva permanentemente!", "sucesso");
+          fecharConfigEmail();
+        } catch (error) {
+          console.error("Erro ao salvar configuração:", error);
+          mostrarNotificacao(
+            "Erro ao salvar configuração: " + error.message,
+            "erro"
+          );
+        }
+      }
+
+      async function testarEmail() {
+        if (
+          !emailjsConfig.publicKey ||
+          !emailjsConfig.serviceId ||
+          !emailjsConfig.templateId
+        ) {
+          mostrarNotificacao("Configure o EmailJS primeiro!", "erro");
+          return;
+        }
+
+        try {
+          const templateParams = {
+            to_name: "Teste",
+            to_email: currentUser.email,
+            agendamento_id: "TEST123",
+            data_agendamento: new Date().toLocaleDateString("pt-BR"),
+            horario: "14:00",
+            veiculo: "Chevrolet Onix 2020 - ABC1234",
+            servicos: "Revisão Preventiva",
+            valor_total: "299,90",
+            local: "AutoFix - Oficina Principal",
+          };
+
+          await emailjs.send(
+            emailjsConfig.serviceId,
+            emailjsConfig.templateId,
+            templateParams
+          );
+
+          mostrarNotificacao("Email de teste enviado com sucesso!", "sucesso");
+        } catch (error) {
+          console.error("Erro no teste de email:", error);
+          mostrarNotificacao(
+            "Erro ao enviar email de teste: " + error.message,
+            "erro"
+          );
+        }
+      }
+
+      function mostrarNotificacao(mensagem, tipo = "sucesso") {
+        const notificacao = document.createElement("div");
+        notificacao.className = `notificacao ${tipo}`;
+        notificacao.innerHTML = mensagem;
+        document.body.appendChild(notificacao);
+
+        setTimeout(() => {
+          notificacao.classList.add("fade-out");
+          setTimeout(() => notificacao.remove(), 500);
+        }, 5000);
+      }
+
+      // Fechar modal ao clicar fora
+      window.onclick = function (event) {
+        const modal = document.getElementById("modalConfigEmail");
+        if (event.target == modal) {
+          fecharConfigEmail();
+        }
+      };
+    </script>
+  </body>
+</html>

@@ -1,436 +1,622 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Agendar Serviço - AutoFix</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
     <link rel="stylesheet" href="Assets/Styles/Agendar/Agendar.css">
-</head>
-<body>
+    <link rel="stylesheet" href="Assets/Styles/Agendar/Agendar.scss">
+    <link rel="stylesheet" href="Assets/Styles/Agendar/Agendar.css.map">
+
+  
+    </style>
+  </head>
+
+   <body>
     <header class="cabecario_header">
-        <div class="container_nagavegacao interface">
-            <a href="index.html" class="logo"> 
-                <i class="fas fa-car-alt"></i> AUTOFIX 
-            </a>
-            <nav class="navegacao">
-                <a href="index.html"><i class="fas fa-home"></i> Página Inicial</a>
-                <a href="meus-agendamentos.html"><i class="fas fa-calendar-check"></i> Meus Agendamentos</a>
-            </nav>
-        </div>
+      <div class="container_nagavegacao">
+        <a href="index.html" class="logo">
+          <i class="fas fa-car-alt"></i> AUTOFIX
+        </a>
+        <nav class="navegacao">
+          <a href="index.html"><i class="fas fa-home"></i> Página Inicial</a>
+          <a href="meus-agendamentos.html"
+            ><i class="fas fa-calendar-check"></i> Meus Agendamentos</a
+          >
+          <div id="user-area"></div>
+        </nav>
+      </div>
     </header>
 
     <main>
-        <div class="form-container interface">
-            <h1><i class="fas fa-calendar-plus"></i> Agendar Serviço</h1>
-            <p>Agende seu serviço mecânico de forma rápida e conveniente</p>
-            
-            <div class="etapa-indicador">
-                <div class="etapa-ponto ativo" data-etapa="1"></div>
-                <div class="etapa-ponto" data-etapa="2"></div>
-                <div class="etapa-ponto" data-etapa="3"></div>
-                <div class="etapa-ponto" data-etapa="4"></div>
-            </div>
-            
-            <!-- Etapa 1 - Seleção de Serviços -->
-            <div id="etapa1" class="etapa">
-                <div class="etapa-header">
-                    <h2><i class="fas fa-tools"></i> Selecione os Serviços</h2>
-                    <p>Escolha os serviços que seu veículo necessita</p>
-                </div>
-                
-                <div class="servicos-container">
-                    <div class="servico-card" data-servico="revisao">
-                        <h3><i class="fas fa-oil-can"></i> Revisão Preventiva</h3>
-                        <p>Verificação completa do veículo com troca de óleo e filtros.</p>
-                        <div class="servico-preco">R$ 299,90</div>
-                        <span class="servico-tempo">2-3 horas</span>
-                    </div>
-                    
-                    <div class="servico-card" data-servico="freios">
-                        <h3><i class="fas fa-stop-circle"></i> Troca de Freios</h3>
-                        <p>Substituição de pastilhas e discos de freio.</p>
-                        <div class="servico-preco">R$ 189,90</div>
-                        <span class="servico-tempo">1-2 horas</span>
-                    </div>
-                    
-                    <div class="servico-card" data-servico="bateria">
-                        <h3><i class="fas fa-battery-three-quarters"></i> Troca de Bateria</h3>
-                        <p>Substituição da bateria com teste do sistema elétrico.</p>
-                        <div class="servico-preco">R$ 249,90</div>
-                        <span class="servico-tempo">30-45 min</span>
-                    </div>
-                    
-                    <div class="servico-card" data-servico="pneus">
-                        <h3><i class="fas fa-tire"></i> Alinhamento e Balanceamento</h3>
-                        <p>Alinhamento de direção e balanceamento de rodas.</p>
-                        <div class="servico-preco">R$ 159,90</div>
-                        <span class="servico-tempo">1 hora</span>
-                    </div>
-                    
-                    <div class="servico-card" data-servico="ar">
-                        <h3><i class="fas fa-wind"></i> Manutenção de Ar Condicionado</h3>
-                        <p>Recarga de gás e limpeza do sistema de ar condicionado.</p>
-                        <div class="servico-preco">R$ 179,90</div>
-                        <span class="servico-tempo">1-1.5 horas</span>
-                    </div>
-                    
-                    <div class="servico-card" data-servico="diagnostico">
-                        <h3><i class="fas fa-check-engine"></i> Diagnóstico Eletrônico</h3>
-                        <p>Leitura de falhas e verificação de sistemas eletrônicos.</p>
-                        <div class="servico-preco">R$ 129,90</div>
-                        <span class="servico-tempo">30-60 min</span>
-                    </div>
-                </div>
-                
-                <div class="div-btn">
-                    <button type="button" class="btn-avancar" onclick="avancarEtapa(2)">
-                        Próxima Etapa <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Etapa 2 - Informações do Veículo -->
-            <div id="etapa2" class="etapa hidden">
-                <div class="etapa-header">
-                    <h2><i class="fas fa-car"></i> Informações do Veículo</h2>
-                    <p>Informe os dados do veículo que receberá os serviços</p>
-                </div>
-                
-                <div class="veiculo-info">
-                    <div class="form-group dois-campos">
-                        <div class="campo">
-                            <label for="marca"><i class="fas fa-car-side"></i> Marca</label>
-                            <select id="marca" class="form-control" required>
-                                <option value="">Selecione a marca</option>
-                                <option value="chevrolet">Chevrolet</option>
-                                <option value="fiat">Fiat</option>
-                                <option value="ford">Ford</option>
-                                <option value="honda">Honda</option>
-                                <option value="hyundai">Hyundai</option>
-                                <option value="toyota">Toyota</option>
-                                <option value="volkswagen">Volkswagen</option>
-                            </select>
-                        </div>
-                        <div class="campo">
-                            <label for="modelo"><i class="fas fa-car-alt"></i> Modelo</label>
-                            <input type="text" id="modelo" required placeholder="Ex: Onix, Gol, Civic">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group dois-campos">
-                        <div class="campo">
-                            <label for="ano"><i class="fas fa-calendar-alt"></i> Ano</label>
-                            <input type="number" id="ano" min="1980" max="2025" required placeholder="Ex: 2020">
-                        </div>
-                        <div class="campo">
-                            <label for="placa"><i class="fas fa-id-card-alt"></i> Placa</label>
-                            <input type="text" id="placa" required placeholder="Ex: ABC1D23" style="text-transform: uppercase">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="observacoes"><i class="fas fa-comment-alt"></i> Observações</label>
-                        <textarea id="observacoes" rows="3" placeholder="Alguma observação importante sobre o veículo?"></textarea>
-                    </div>
-                </div>
-                
-                <div class="div-btn">
-                    <button type="button" class="btn-voltar" onclick="voltarEtapa(1)">
-                        <i class="fas fa-arrow-left"></i> Voltar
-                    </button>
-                    <button type="button" class="btn-avancar" onclick="avancarEtapa(3)">
-                        Próxima Etapa <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Etapa 3 - Data e Horário -->
-            <div id="etapa3" class="etapa hidden">
-                <div class="etapa-header">
-                    <h2><i class="far fa-calendar-alt"></i> Data e Horário</h2>
-                    <p>Selecione quando deseja agendar seu serviço</p>
-                </div>
-                
-                <div class="calendar-container">
-                    <div class="form-group">
-                        <label for="data"><i class="fas fa-calendar-day"></i> Selecione a Data</label>
-                        <input type="date" id="data" min="" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label><i class="fas fa-clock"></i> Horários Disponíveis</label>
-                        <div class="horarios-container">
-                            <button type="button" class="horario-btn">08:00</button>
-                            <button type="button" class="horario-btn">09:00</button>
-                            <button type="button" class="horario-btn">10:00</button>
-                            <button type="button" class="horario-btn indisponivel">11:00</button>
-                            <button type="button" class="horario-btn">13:00</button>
-                            <button type="button" class="horario-btn">14:00</button>
-                            <button type="button" class="horario-btn">15:00</button>
-                            <button type="button" class="horario-btn">16:00</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="div-btn">
-                    <button type="button" class="btn-voltar" onclick="voltarEtapa(2)">
-                        <i class="fas fa-arrow-left"></i> Voltar
-                    </button>
-                    <button type="button" class="btn-avancar" onclick="avancarEtapa(4)">
-                        Próxima Etapa <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Etapa 4 - Confirmação -->
-            <div id="etapa4" class="etapa hidden">
-                <div class="etapa-header">
-                    <h2><i class="fas fa-check-circle"></i> Confirmação</h2>
-                    <p>Revise as informações antes de confirmar seu agendamento</p>
-                </div>
-                
-                <div class="resumo-agendamento">
-                    <h3><i class="fas fa-clipboard-list"></i> Resumo do Agendamento</h3>
-                    
-                    <div class="resumo-item">
-                        <span>Serviços:</span>
-                        <span id="resumo-servicos">Revisão Preventiva</span>
-                    </div>
-                    
-                    <div class="resumo-item">
-                        <span>Veículo:</span>
-                        <span id="resumo-veiculo">Chevrolet Onix 2020 - ABC1D23</span>
-                    </div>
-                    
-                    <div class="resumo-item">
-                        <span>Data e Horário:</span>
-                        <span id="resumo-data">15/06/2025 às 14:00</span>
-                    </div>
-                    
-                    <div class="resumo-item">
-                        <span>Valor Total:</span>
-                        <span id="resumo-valor">R$ 299,90</span>
-                    </div>
-                    
-                    <div class="resumo-total">
-                        Total a Pagar: <span id="total-final">R$ 299,90</span>
-                    </div>
-                </div>
-                
-                <div class="form-group" id="div_confimacao">
-                    <input type="checkbox" id="confirmacao" required>
-                    <label for="confirmacao">Confirmo que as informações estão corretas e concordo com os <a href="termos.html">Termos de Serviço</a>.</label>
-                </div>
-                
-                <div class="div-btn">
-                    <button type="button" class="btn-voltar" onclick="voltarEtapa(3)">
-                        <i class="fas fa-arrow-left"></i> Voltar
-                    </button>
-                    <button type="button" class="btn-finalizar" onclick="finalizarAgendamento()">
-                        <i class="fas fa-check"></i> Confirmar Agendamento
-                    </button>
-                </div>
-            </div>
+      <div class="form-container">
+        <h1><i class="fas fa-calendar-plus"></i> Agendar Serviço</h1>
+        <p>Agende seu serviço mecânico de forma rápida e conveniente</p>
+
+        <div class="etapa-indicador">
+          <div class="etapa-ponto ativo" data-etapa="1">1</div>
+          <div class="etapa-ponto" data-etapa="2">2</div>
+          <div class="etapa-ponto" data-etapa="3">3</div>
+          <div class="etapa-ponto" data-etapa="4">4</div>
         </div>
-    </main>
-    
-    <footer class="rodape">
-        <div class="rodape-container interface">
-            <div class="rodape-links">
-                <a href="politicas.html"><i class="fas fa-shield-alt"></i> Política de Privacidade</a> 
-                <a href="termos.html"><i class="fas fa-file-contract"></i> Termos de Uso</a>
-                <a href="contato.html"><i class="fas fa-headset"></i> Fale Conosco</a>
+
+        <!-- Etapa 1 - Seleção de Serviços -->
+        <div id="etapa1" class="etapa ativa">
+          <div class="etapa-header">
+            <h2><i class="fas fa-tools"></i> Selecione os Serviços</h2>
+            <p>Escolha os serviços que seu veículo necessita</p>
+          </div>
+
+          <div class="servicos-container">
+            <div class="servico-card" data-servico="revisao">
+              <h3><i class="fas fa-oil-can"></i> Revisão Preventiva</h3>
+              <p>
+                Verificação completa do veículo com troca de óleo e filtros.
+              </p>
+              <div class="servico-preco">R$ 299,90</div>
+              <span class="servico-tempo">2-3 horas</span>
             </div>
 
-            <div class="rodape-lgpd">
-                <i class="fas fa-lock"></i>
-                <p>Estamos em conformidade com a <strong>Lei Geral de Proteção de Dados (LGPD)</strong>.</p>
+            <div class="servico-card" data-servico="freios">
+              <h3><i class="fas fa-stop-circle"></i> Troca de Freios</h3>
+              <p>Substituição de pastilhas e discos de freio.</p>
+              <div class="servico-preco">R$ 189,90</div>
+              <span class="servico-tempo">1-2 horas</span>
             </div>
-            
-            <div class="rodape-copyright">
-                <p>© 2025 <strong>AutoFix</strong> | Todos os direitos reservados.</p>
+
+            <div class="servico-card" data-servico="bateria">
+              <h3>
+                <i class="fas fa-battery-three-quarters"></i> Troca de Bateria
+              </h3>
+              <p>Substituição da bateria com teste do sistema elétrico.</p>
+              <div class="servico-preco">R$ 249,90</div>
+              <span class="servico-tempo">30-45 min</span>
             </div>
+
+            <div class="servico-card" data-servico="pneus">
+              <h3><i class="fas fa-tire"></i> Alinhamento e Balanceamento</h3>
+              <p>Alinhamento de direção e balanceamento de rodas.</p>
+              <div class="servico-preco">R$ 159,90</div>
+              <span class="servico-tempo">1 hora</span>
+            </div>
+
+            <div class="servico-card" data-servico="ar">
+              <h3><i class="fas fa-wind"></i> Manutenção de Ar Condicionado</h3>
+              <p>Recarga de gás e limpeza do sistema de ar condicionado.</p>
+              <div class="servico-preco">R$ 179,90</div>
+              <span class="servico-tempo">1-1.5 horas</span>
+            </div>
+
+            <div class="servico-card" data-servico="diagnostico">
+              <h3>
+                <i class="fas fa-check-engine"></i> Diagnóstico Eletrônico
+              </h3>
+              <p>Leitura de falhas e verificação de sistemas eletrônicos.</p>
+              <div class="servico-preco">R$ 129,90</div>
+              <span class="servico-tempo">30-60 min</span>
+            </div>
+          </div>
+
+          <div class="div-btn">
+            <button type="button" class="btn-avancar" onclick="avancarEtapa(2)">
+              Próxima Etapa <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
         </div>
-    </footer>
+
+        <!-- Etapa 2 - Informações do Veículo -->
+        <div id="etapa2" class="etapa">
+          <div class="etapa-header">
+            <h2><i class="fas fa-car"></i> Informações do Veículo</h2>
+            <p>Informe os dados do veículo que receberá os serviços</p>
+          </div>
+
+          <div class="form-group dois-campos">
+            <div class="campo">
+              <label for="marca"><i class="fas fa-car-side"></i> Marca</label>
+              <select id="marca" required>
+                <option value="">Selecione a marca</option>
+                <option value="chevrolet">Chevrolet</option>
+                <option value="fiat">Fiat</option>
+                <option value="ford">Ford</option>
+                <option value="honda">Honda</option>
+                <option value="hyundai">Hyundai</option>
+                <option value="toyota">Toyota</option>
+                <option value="volkswagen">Volkswagen</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="modelo"><i class="fas fa-car-alt"></i> Modelo</label>
+              <input
+                type="text"
+                id="modelo"
+                required
+                placeholder="Ex: Onix, Gol, Civic"
+              />
+            </div>
+          </div>
+
+          <div class="form-group dois-campos">
+            <div class="campo">
+              <label for="ano"><i class="fas fa-calendar-alt"></i> Ano</label>
+              <input
+                type="number"
+                id="ano"
+                min="1980"
+                max="2025"
+                required
+                placeholder="Ex: 2020"
+              />
+            </div>
+            <div class="campo">
+              <label for="placa"
+                ><i class="fas fa-id-card-alt"></i> Placa</label
+              >
+              <input
+                type="text"
+                id="placa"
+                required
+                placeholder="Ex: ABC1D23"
+                style="text-transform: uppercase"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="observacoes"
+              ><i class="fas fa-comment-alt"></i> Observações</label
+            >
+            <textarea
+              id="observacoes"
+              rows="3"
+              placeholder="Alguma observação importante sobre o veículo?"
+            ></textarea>
+          </div>
+
+          <div class="div-btn">
+            <button type="button" class="btn-voltar" onclick="voltarEtapa(1)">
+              <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <button type="button" class="btn-avancar" onclick="avancarEtapa(3)">
+              Próxima Etapa <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Etapa 3 - Data e Horário -->
+        <div id="etapa3" class="etapa">
+          <div class="etapa-header">
+            <h2><i class="far fa-calendar-alt"></i> Data e Horário</h2>
+            <p>Selecione quando deseja agendar seu serviço</p>
+          </div>
+
+          <div class="form-group">
+            <label for="data"
+              ><i class="fas fa-calendar-day"></i> Selecione a Data</label
+            >
+            <input type="date" id="data" required />
+          </div>
+
+          <div class="form-group">
+            <label><i class="fas fa-clock"></i> Horários Disponíveis</label>
+            <div class="horarios-container">
+              <button type="button" class="horario-btn" data-horario="08:00">
+                08:00
+              </button>
+              <button type="button" class="horario-btn" data-horario="09:00">
+                09:00
+              </button>
+              <button type="button" class="horario-btn" data-horario="10:00">
+                10:00
+              </button>
+              <button
+                type="button"
+                class="horario-btn indisponivel"
+                data-horario="11:00"
+              >
+                11:00
+              </button>
+              <button type="button" class="horario-btn" data-horario="13:00">
+                13:00
+              </button>
+              <button type="button" class="horario-btn" data-horario="14:00">
+                14:00
+              </button>
+              <button type="button" class="horario-btn" data-horario="15:00">
+                15:00
+              </button>
+              <button type="button" class="horario-btn" data-horario="16:00">
+                16:00
+              </button>
+            </div>
+            <div
+              id="horario-selecionado"
+              style="display: none; margin-top: 1rem; color: #28a745"
+            >
+              <i class="fas fa-check-circle"></i> Horário selecionado:
+              <span id="horario-texto"></span>
+            </div>
+          </div>
+
+          <div class="div-btn">
+            <button type="button" class="btn-voltar" onclick="voltarEtapa(2)">
+              <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <button type="button" class="btn-avancar" onclick="avancarEtapa(4)">
+              Próxima Etapa <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Etapa 4 - Confirmação -->
+        <div id="etapa4" class="etapa">
+          <div class="etapa-header">
+            <h2><i class="fas fa-check-circle"></i> Confirmação</h2>
+            <p>Revise as informações antes de confirmar seu agendamento</p>
+          </div>
+
+          <div class="resumo-agendamento">
+            <h3><i class="fas fa-clipboard-list"></i> Resumo do Agendamento</h3>
+
+            <div class="resumo-item">
+              <span>Serviços:</span>
+              <span id="resumo-servicos"></span>
+            </div>
+
+            <div class="resumo-item">
+              <span>Veículo:</span>
+              <span id="resumo-veiculo"></span>
+            </div>
+
+            <div class="resumo-item">
+              <span>Data e Horário:</span>
+              <span id="resumo-data"></span>
+            </div>
+
+            <div class="resumo-total">
+              Total a Pagar: <span id="total-final"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input type="checkbox" id="confirmacao" required />
+            <label for="confirmacao"
+              >Confirmo que as informações estão corretas e concordo com os
+              <a href="termos.html">Termos de Serviço</a>.</label
+            >
+          </div>
+
+          <div class="div-btn">
+            <button type="button" class="btn-voltar" onclick="voltarEtapa(3)">
+              <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            <button
+              type="button"
+              class="btn-finalizar"
+              onclick="finalizarAgendamento()"
+            >
+              <i class="fas fa-check"></i> Confirmar Agendamento
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
 
     <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-storage.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
-    <script src="Assets/js/firebase/firebase.js"></script>
-    <script src="Assets/js/firebase/checar_login.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // Variáveis globais para armazenar os dados do agendamento
-        let agendamento = {
-            servicos: [],
-            veiculo: {},
-            data: null,
-            horario: null,
-            status: null,
-            id: null,
-            local: null
+      // Configuração do Firebase
+      const firebaseConfig = {
+        apiKey: "AIzaSyA4ek9mJ3RomY25W4uTq4M7AHy2Q3a24iU",
+        authDomain: "projeto-ec888.firebaseapp.com",
+        projectId: "projeto-ec888",
+        storageBucket: "projeto-ec888.firebasestorage.app",
+        messagingSenderId: "818995568430",
+        appId: "1:818995568430:web:7b3b1c3465e1c815e324bf",
+      };
+
+      // Inicializar Firebase
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+
+      // Variáveis globais
+      let currentUser = null;
+      let agendamento = {
+        servicos: [],
+        veiculo: {},
+        data: null,
+        horario: null,
+        status: "Pendente",
+        observacoes: "",
+        valorTotal: 0,
+      };
+
+      // Mapeamento de serviços
+      const servicosInfo = {
+        revisao: { nome: "Revisão Preventiva", preco: 299.9 },
+        freios: { nome: "Troca de Freios", preco: 189.9 },
+        bateria: { nome: "Troca de Bateria", preco: 249.9 },
+        pneus: { nome: "Alinhamento e Balanceamento", preco: 159.9 },
+        ar: { nome: "Manutenção de Ar Condicionado", preco: 179.9 },
+        diagnostico: { nome: "Diagnóstico Eletrônico", preco: 129.9 },
+      };
+
+      const marcasNomes = {
+        chevrolet: "Chevrolet",
+        fiat: "Fiat",
+        ford: "Ford",
+        honda: "Honda",
+        hyundai: "Hyundai",
+        toyota: "Toyota",
+        volkswagen: "Volkswagen",
+      };
+
+      // Verificar autenticação
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          currentUser = user;
+          carregarDadosUsuario();
+        } else {
+          mostrarNotificacao(
+            "Você precisa estar logado para agendar serviços",
+            "erro"
+          );
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 2000);
         }
-        
-        // Configura data mínima como amanhã
-        document.getElementById('data').min = new Date(new Date().getTime() + 86400000).toISOString().split('T')[0]
-        
+      });
+
+      function carregarDadosUsuario() {
+        db.collection("users")
+          .doc(currentUser.uid)
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              const userData = doc.data();
+              const nomeUsuario =
+                userData.dadosPessoais?.nome ||
+                currentUser.displayName ||
+                currentUser.email.split("@")[0];
+
+              document.getElementById("user-area").innerHTML = `
+                        <span style="color: white;">Olá, ${nomeUsuario}!</span>
+                    `;
+            }
+          });
+      }
+
+      // Configurar data mínima
+      document.addEventListener("DOMContentLoaded", function () {
+        const hoje = new Date();
+        const amanha = new Date(hoje.getTime() + 86400000);
+        document.getElementById("data").min = amanha
+          .toISOString()
+          .split("T")[0];
+
         // Seleção de serviços
-        document.querySelectorAll('.servico-card').forEach(card => {
-            card.addEventListener('click', function() {
-                this.classList.toggle('selecionado')
-                const servico = this.getAttribute('data-servico')
-                
-                if(this.classList.contains('selecionado')) {
-                    if(!agendamento.servicos.includes(servico)) {
-                        agendamento.servicos.push(servico)
-                    }
-                } else {
-                    agendamento.servicos = agendamento.servicos.filter(s => s !== servico)
-                }
-                
-                console.log('Serviços selecionados:', agendamento.servicos)
-            })
-        })
-        
+        document.querySelectorAll(".servico-card").forEach((card) => {
+          card.addEventListener("click", function () {
+            this.classList.toggle("selecionado");
+            const servico = this.getAttribute("data-servico");
+
+            if (this.classList.contains("selecionado")) {
+              if (!agendamento.servicos.includes(servico)) {
+                agendamento.servicos.push(servico);
+              }
+            } else {
+              agendamento.servicos = agendamento.servicos.filter(
+                (s) => s !== servico
+              );
+            }
+          });
+        });
+
         // Seleção de horário
-        document.querySelectorAll('.horario-btn:not(.indisponivel)').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.horario-btn').forEach(b => b.classList.remove('selecionado'))
-                this.classList.add('selecionado')
-                agendamento.horario = this.textContent
-                console.log('Horário selecionado:', agendamento.horario)
-            })
-        })
-        
-        // Navegação entre etapas
-        function avancarEtapa(etapa) {
-            // Validações antes de avançar
-            if(etapa === 2 && agendamento.servicos.length === 0) {
-                mostrarNotificacao('Selecione pelo menos um serviço para continuar', 'erro')
-                return
-            }
-            
-            if(etapa === 3) {
-                const marca = document.getElementById('marca').value
-                const modelo = document.getElementById('modelo').value
-                const ano = document.getElementById('ano').value
-                const placa = document.getElementById('placa').value
-                
-                if(!marca || !modelo || !ano || !placa) {
-                    mostrarNotificacao('Preencha todos os campos do veículo para continuar', 'erro')
-                    return
-                }
-                
-                agendamento.veiculo = { marca, modelo, ano, placa }
-            }
-            
-            if(etapa === 4) {
-                const data = document.getElementById('data').value
-                if(!data || !agendamento.horario) {
-                    mostrarNotificacao('Selecione uma data e horário para continuar', 'erro')
-                    return
-                }
-                
-                // Atualiza resumo
-                document.getElementById('resumo-servicos').textContent = agendamento.servicos
-                    .map(s => {
-                        switch(s) {
-                            case 'revisao': return 'Revisão Preventiva'
-                            case 'freios': return 'Troca de Freios'
-                            case 'bateria': return 'Troca de Bateria'
-                            case 'pneus': return 'Alinhamento e Balanceamento'
-                            case 'ar': return 'Manutenção de Ar Condicionado'
-                            case 'diagnostico': return 'Diagnóstico Eletrônico'
-                        }
-                    })
-                    .join(', ')
-                
-                document.getElementById('resumo-veiculo').textContent = 
-                    `${agendamento.veiculo.marca} ${agendamento.veiculo.modelo} ${agendamento.veiculo.ano} - ${agendamento.veiculo.placa}`
-                
-                const dataObj = new Date(data)
-                document.getElementById('resumo-data').textContent = 
-                    `${dataObj.toLocaleDateString('pt-BR')} às ${agendamento.horario}`
-                
-                // Cálculo do valor total (simplificado)
-                let total = 0
-                agendamento.servicos.forEach(s => {
-                    switch(s) {
-                        case 'revisao': total += 299.90; break
-                        case 'freios': total += 189.90; break
-                        case 'bateria': total += 249.90; break
-                        case 'pneus': total += 159.90; break
-                        case 'ar': total += 179.90; break
-                        case 'diagnostico': total += 129.90; break
-                    }
-                })
-                
-                document.getElementById('resumo-valor').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`
-                document.getElementById('total-final').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`
-            }
-            
-            // Oculta todas as etapas
-            document.querySelectorAll('.etapa').forEach(e => e.classList.add('hidden'))
-            // Mostra a etapa atual
-            document.getElementById(`etapa${etapa}`).classList.remove('hidden')
-            
-            // Atualiza indicador de etapas
-            document.querySelectorAll('.etapa-ponto').forEach(ponto => {
-                ponto.classList.remove('ativo')
-                if(parseInt(ponto.getAttribute('data-etapa')) <= etapa) {
-                    ponto.classList.add('ativo')
-                }
-            })
+        document
+          .querySelectorAll(".horario-btn:not(.indisponivel)")
+          .forEach((btn) => {
+            btn.addEventListener("click", function () {
+              document.querySelectorAll(".horario-btn").forEach((b) => {
+                b.classList.remove("selecionado");
+              });
+
+              this.classList.add("selecionado");
+              const horarioSelecionado = this.getAttribute("data-horario");
+              agendamento.horario = horarioSelecionado;
+
+              const indicador = document.getElementById("horario-selecionado");
+              const textoHorario = document.getElementById("horario-texto");
+              indicador.style.display = "block";
+              textoHorario.textContent = horarioSelecionado;
+            });
+          });
+      });
+
+      // Navegação entre etapas
+      function avancarEtapa(etapa) {
+        if (etapa === 2 && agendamento.servicos.length === 0) {
+          mostrarNotificacao(
+            "Selecione pelo menos um serviço para continuar",
+            "erro"
+          );
+          return;
         }
-        
-        function voltarEtapa(etapa) {
-            document.querySelectorAll('.etapa').forEach(e => e.classList.add('hidden'))
-            document.getElementById(`etapa${etapa}`).classList.remove('hidden')
-            
-            document.querySelectorAll('.etapa-ponto').forEach(ponto => {
-                ponto.classList.remove('ativo')
-                if(parseInt(ponto.getAttribute('data-etapa')) <= etapa) {
-                    ponto.classList.add('ativo')
-                }
-            })
+
+        if (etapa === 3) {
+          const marca = document.getElementById("marca").value;
+          const modelo = document.getElementById("modelo").value;
+          const ano = document.getElementById("ano").value;
+          const placa = document.getElementById("placa").value;
+
+          if (!marca || !modelo || !ano || !placa) {
+            mostrarNotificacao(
+              "Preencha todos os campos do veículo para continuar",
+              "erro"
+            );
+            return;
+          }
+
+          agendamento.veiculo = { marca, modelo, ano, placa };
+          agendamento.observacoes =
+            document.getElementById("observacoes").value;
         }
-        
-        function finalizarAgendamento() {
-            if(!document.getElementById('confirmacao').checked) {
-                mostrarNotificacao('Confirme que as informações estão corretas para finalizar', 'erro')
-                return
-            }
-            
-            // Aqui você enviaria os dados para o Firebase
-            agendamento.data = document.getElementById('data').value
-            agendamento.status = 'Pendente'
-            agendamento.id = db.collection('users').doc().id
-            agendamento.local = user.endereco.completo
-            
-            // Simulação de envio bem-sucedido
-            mostrarNotificacao('Agendamento realizado com sucesso!', 'sucesso')
-            
-            // Redireciona após 2 segundos
-            user.agendamentos.push(agendamento)
-            db.collection('users').doc(user.id).update({ agendamentos: user.agendamentos }).then(() => {
-                window.location.href = 'meus-agendamentos.html'
-            })
+
+        if (etapa === 4) {
+          const data = document.getElementById("data").value;
+          if (!data || !agendamento.horario) {
+            mostrarNotificacao(
+              "Selecione uma data e horário para continuar",
+              "erro"
+            );
+            return;
+          }
+
+          agendamento.data = data;
+          atualizarResumo();
         }
-        
-        function mostrarNotificacao(mensagem, tipo = 'sucesso') {
-            const notificacao = document.createElement('div')
-            notificacao.className = `notificacao ${tipo}`
-            notificacao.innerHTML = mensagem
-            document.body.appendChild(notificacao)
-            
-            setTimeout(() => {
-                notificacao.classList.add('fade-out')
-                setTimeout(() => notificacao.remove(), 500)
-            }, 3000)
+
+        mostrarEtapa(etapa);
+      }
+
+      function voltarEtapa(etapa) {
+        mostrarEtapa(etapa);
+      }
+
+      function mostrarEtapa(etapa) {
+        document
+          .querySelectorAll(".etapa")
+          .forEach((e) => e.classList.remove("ativa"));
+        document.getElementById(`etapa${etapa}`).classList.add("ativa");
+
+        document.querySelectorAll(".etapa-ponto").forEach((ponto) => {
+          ponto.classList.remove("ativo");
+          if (parseInt(ponto.getAttribute("data-etapa")) <= etapa) {
+            ponto.classList.add("ativo");
+          }
+        });
+      }
+
+      function atualizarResumo() {
+        // Serviços
+        const servicosNomes = agendamento.servicos
+          .map((s) => servicosInfo[s]?.nome || s)
+          .join(", ");
+        document.getElementById("resumo-servicos").textContent = servicosNomes;
+
+        // Veículo
+        const marcaNome =
+          marcasNomes[agendamento.veiculo.marca] || agendamento.veiculo.marca;
+        document.getElementById(
+          "resumo-veiculo"
+        ).textContent = `${marcaNome} ${agendamento.veiculo.modelo} ${agendamento.veiculo.ano} - ${agendamento.veiculo.placa}`;
+
+        // Data e horário
+        const dataObj = new Date(agendamento.data);
+        document.getElementById(
+          "resumo-data"
+        ).textContent = `${dataObj.toLocaleDateString("pt-BR")} às ${
+          agendamento.horario
+        }`;
+
+        // Valor total
+        let total = 0;
+        agendamento.servicos.forEach((s) => {
+          total += servicosInfo[s]?.preco || 0;
+        });
+        agendamento.valorTotal = total;
+
+        document.getElementById("total-final").textContent = `R$ ${total
+          .toFixed(2)
+          .replace(".", ",")}`;
+      }
+
+      async function finalizarAgendamento() {
+        if (!document.getElementById("confirmacao").checked) {
+          mostrarNotificacao(
+            "Confirme que as informações estão corretas para finalizar",
+            "erro"
+          );
+          return;
         }
+
+        try {
+          // Buscar dados do usuário
+          const userDoc = await db.collection("users").doc(currentUser.uid).get();
+          
+          if (!userDoc.exists) {
+            throw new Error("Dados do usuário não encontrados");
+          }
+
+          const userData = userDoc.data();
+          
+          // Gerar ID único para o agendamento
+          const agendamentoId = db.collection("agendamentos").doc().id;
+
+          // Completar dados do agendamento - AJUSTADO PARA SUA ESTRUTURA
+          const agendamentoCompleto = {
+            id: agendamentoId,
+            usuarioId: currentUser.uid,
+            usuarioNome: userData.dadosPessoais?.nomeCompleto || currentUser.displayName || currentUser.email,
+            usuarioEmail: currentUser.email,
+            usuarioTelefone: userData.dadosPessoais?.telefone || "",
+            local: userData.endereco?.completo || "AutoFix - Oficina Principal",
+            dataCriacao: new Date().toISOString(), // String ao invés de Timestamp
+            data: agendamento.data, // String da data
+            horario: agendamento.horario, // String do horário
+            servicos: agendamento.servicos, // Array de strings
+            veiculo: [
+              agendamento.veiculo.marca,
+              agendamento.veiculo.modelo,
+              agendamento.veiculo.ano.toString(),
+              agendamento.veiculo.placa
+            ], // Array ao invés de objeto
+            status: agendamento.status,
+            observacoes: agendamento.observacoes,
+            valorTotal: agendamento.valorTotal.toString(), // String ao invés de number
+          };
+
+          console.log("Salvando agendamento:", agendamentoCompleto);
+
+          // Salvar agendamento na coleção
+          await db.collection("agendamentos").doc(agendamentoId).set(agendamentoCompleto);
+
+          console.log("Agendamento salvo com sucesso!");
+
+          mostrarNotificacao("🎉 Agendamento confirmado com sucesso!", "sucesso");
+          
+          setTimeout(() => {
+            window.location.href = "meus-agendamentos.html";
+          }, 2000);
+
+        } catch (error) {
+          console.error("Erro ao salvar agendamento:", error);
+          mostrarNotificacao(
+            "Erro ao salvar agendamento. Tente novamente.",
+            "erro"
+          );
+        }
+      }
+
+      function mostrarNotificacao(mensagem, tipo = "sucesso") {
+        const notificacao = document.createElement("div");
+        notificacao.className = `notificacao ${tipo}`;
+        notificacao.innerHTML = mensagem;
+        document.body.appendChild(notificacao);
+
+        setTimeout(() => {
+          notificacao.classList.add("fade-out");
+          setTimeout(() => notificacao.remove(), 500);
+        }, 3000);
+      }
     </script>
-</body>
+  </body>
 </html>
